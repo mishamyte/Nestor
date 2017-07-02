@@ -61,13 +61,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\ISettings.cs" />
     <Compile Include="Model\Nest.cs" />
     <Compile Include="Model\NestInfo.cs" />
     <Compile Include="Model\Pokemon.cs" />
     <Compile Include="Nestor.cs" />
     <Compile Include="Parser\Parser.cs" />
-    <Compile Include="Parser\TheSilphRoadParser.cs" />
+    <Compile Include="Parser\PayloadBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
