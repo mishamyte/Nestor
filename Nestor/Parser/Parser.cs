@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Nestor.Interfaces;
 using Nestor.Model;
+using Nestor.Utils;
+using Newtonsoft.Json.Linq;
 
 namespace Nestor.Parser
 {
@@ -20,9 +22,25 @@ namespace Nestor.Parser
 			_settings = settings;
 		}
 
-		public Task<IList<Nest>> GetNests()
+		public async Task<IList<Nest>> GetNests()
 		{
-			throw new NotImplementedException();
+			var responseString = await GetSilphroadResponse();
+
+			JObject responseObject;
+
+			var success = JsonDeserializer.TryDeserializeObject(responseString, out responseObject);
+
+			if (success && responseObject?["localMarkers"] != null)
+			{
+				Dictionary<string, Nest> result;
+				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out result);
+
+				if (success)
+				{
+					return result.Select(nest => nest.Value).ToList();
+				}
+			}
+			return default(List<Nest>);
 		}
 
 		private async Task<string> GetSilphroadResponse()
