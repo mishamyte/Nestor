@@ -65,10 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\DatabaseProvider.cs" />
     <Compile Include="DAL\NestInfoRepository.cs" />
     <Compile Include="DAL\NestRepository.cs" />
     <Compile Include="DAL\NestsContext.cs" />
     <Compile Include="DAL\PokemonRepository.cs" />
+    <Compile Include="Interfaces\IDatabaseProvider.cs" />
     <Compile Include="Interfaces\IGenericRepository.cs" />
     <Compile Include="Interfaces\INestInfoRepository.cs" />
     <Compile Include="Interfaces\INestProvider.cs" />
