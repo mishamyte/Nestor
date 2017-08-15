@@ -16,5 +16,12 @@ namespace Nestor.Utils
 			Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] ERROR: {error}");
 			Console.ResetColor();
 		}
+
+		public void LogDebug(string data)
+		{
+			Console.ForegroundColor = ConsoleColor.Yellow;
+			Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] DEBUG: {data}");
+			Console.ResetColor();
+		}
 	}
 }
