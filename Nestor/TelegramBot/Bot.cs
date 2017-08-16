@@ -2,7 +2,6 @@
 using Nestor.Interfaces;
 using Telegram.Bot;
 using Telegram.Bot.Args;
-using Telegram.Bot.Types;
 
 namespace Nestor.TelegramBot
 {
@@ -22,33 +21,24 @@ namespace Nestor.TelegramBot
 			_client.StartReceiving();
 		}
 
-		// OK, DO WE NEED THIS FUNCTIONS AND COULD WE MAKE IT PRIVATE?
-		public async Task<Message> SendMessage(long chatId, string text)
+		public async Task SendMessage(string text)
 		{
-			return await _client.SendTextMessageAsync(chatId, text);
+			await _client.SendTextMessageAsync(_settings.ChatId, text);
 		}
 
-		public async Task<Message> SendLocation(long chatId, float latitude, float longitude)
+		public async Task SendLocation(float latitude, float longitude)
 		{
-			return await _client.SendLocationAsync(chatId, latitude, longitude);
-		} 
+			await _client.SendLocationAsync(_settings.ChatId, latitude, longitude);
+		}
 
 		private void InitiateBot()
 		{
-			_client.OnMessage += OnMessageReceived;
-			_client.OnMessageEdited += OnMessageReceived;
 			_client.OnReceiveError += OnReceiveError;
 		}
 
 		private void OnReceiveError(object sender, ReceiveErrorEventArgs e)
 		{
 			_logger.LogError(e.ApiRequestException.ToString());
-		}
-
-		private void OnMessageReceived(object sender, MessageEventArgs e)
-		{
-			//TODO: ADD MESSAGE TYPE SWITCH & ADMIN FUNCTIONS
-			_logger.LogMessage($"[BOT IN]: {e.Message.From.Username}:{e.Message.Text}");
 		}
 	}
 }

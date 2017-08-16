@@ -1,7 +1,10 @@
-﻿namespace Nestor.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Nestor.Interfaces
 {
 	public interface IBotProvider
 	{
-
+		Task SendMessage(string text);
+		Task SendLocation(float latitude, float longitude);
 	}
 }
