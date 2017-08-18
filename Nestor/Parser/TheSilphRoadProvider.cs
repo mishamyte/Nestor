@@ -3,16 +3,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Nestor.Interfaces;
+using Nestor.Interfaces.Settings;
 
 namespace Nestor.Parser
 {
-	public class TheSilphRoadProvider : INestProvider, IDisposable
+	internal class TheSilphRoadProvider : INestProvider, IDisposable
 	{
 		// It's recommended to instantiate one HttpClient per app
 		private static readonly HttpClient Client = new HttpClient();
-		private readonly ISettings _settings;
+		private readonly IParserSettings _settings;
 
-		public TheSilphRoadProvider(ISettings settings)
+		internal TheSilphRoadProvider(IParserSettings settings)
 		{
 			_settings = settings;
 		}

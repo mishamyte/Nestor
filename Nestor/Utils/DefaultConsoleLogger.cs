@@ -3,7 +3,7 @@ using Nestor.Interfaces;
 
 namespace Nestor.Utils
 {
-	public class DefaultConsoleLogger : ILogger
+	internal class DefaultConsoleLogger : ILogger
 	{
 		public void LogMessage(string message)
 		{

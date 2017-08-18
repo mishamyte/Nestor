@@ -1,9 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using Newtonsoft.Json;
 
 namespace Nestor.Model
 {
 	public class Nest
 	{
+		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		[JsonProperty("id")]
 		public int Id { get; set; }
 		[JsonProperty("pokemon_id")]

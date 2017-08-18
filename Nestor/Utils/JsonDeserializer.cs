@@ -3,9 +3,9 @@ using Newtonsoft.Json.Serialization;
 
 namespace Nestor.Utils
 {
-	public static class JsonDeserializer
+	internal static class JsonDeserializer
 	{
-		public static bool TryDeserializeObject<T>(string data, out T result)
+		internal static bool TryDeserializeObject<T>(string data, out T result)
 		{
 			var success = true;
 

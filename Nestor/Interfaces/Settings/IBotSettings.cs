@@ -1,4 +1,4 @@
-﻿namespace Nestor.Interfaces
+﻿namespace Nestor.Interfaces.Settings
 {
 	public interface IBotSettings
 	{

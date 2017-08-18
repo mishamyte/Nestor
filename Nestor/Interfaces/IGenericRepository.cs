@@ -9,8 +9,8 @@ namespace Nestor.Interfaces
     /// </summary>
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where);
-        TEntity GetByID(object id);
+        IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null);
+        TEntity GetById(object id);
         void Insert(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entityToDelete);

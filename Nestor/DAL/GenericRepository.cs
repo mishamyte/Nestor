@@ -10,18 +10,18 @@ namespace Nestor.DAL
     public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
         where TEntity : class
     {
-        internal NestsContext context;
-        internal DbSet<TEntity> dbSet;
+        internal NestsContext Context;
+        internal DbSet<TEntity> DbSet;
 
-        public GenericRepository(NestsContext context)
+	    protected GenericRepository(NestsContext context)
         {
-            this.context = context;
-            this.dbSet = context.Set<TEntity>();
+            Context = context;
+            DbSet = context.Set<TEntity>();
         }
 
         public virtual IEnumerable<TEntity> Get(Expression<Func<TEntity, bool>> where = null)
         {
-            IQueryable<TEntity> query = dbSet;
+            IQueryable<TEntity> query = DbSet;
 
             if (where != null)
             {
@@ -31,35 +31,35 @@ namespace Nestor.DAL
             return query.ToList();
         }
 
-        public virtual TEntity GetByID(object id)
+        public virtual TEntity GetById(object id)
         {
-            return dbSet.Find(id);
+            return DbSet.Find(id);
         }
 
         public virtual void Insert(TEntity entity)
         {
-            dbSet.Add(entity);
+            DbSet.Add(entity);
         }
 
         public virtual void Delete(object id)
         {
-            TEntity entityToDelete = dbSet.Find(id);
+            var entityToDelete = DbSet.Find(id);
             Delete(entityToDelete);
         }
 
         public virtual void Delete(TEntity entityToDelete)
         {
-            if (context.Entry(entityToDelete).State == EntityState.Detached)
+            if (Context.Entry(entityToDelete).State == EntityState.Detached)
             {
-                dbSet.Attach(entityToDelete);
+                DbSet.Attach(entityToDelete);
             }
-            dbSet.Remove(entityToDelete);
+            DbSet.Remove(entityToDelete);
         }
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            DbSet.Attach(entityToUpdate);
+            Context.Entry(entityToUpdate).State = EntityState.Modified;
         }
     }
 }

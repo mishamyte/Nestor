@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Nestor.Interfaces;
+using Nestor.Interfaces.Settings;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 
@@ -34,11 +35,17 @@ namespace Nestor.TelegramBot
 		private void InitiateBot()
 		{
 			_client.OnReceiveError += OnReceiveError;
+			_client.OnMessage += OnReceiveMessage;
 		}
 
 		private void OnReceiveError(object sender, ReceiveErrorEventArgs e)
 		{
 			_logger.LogError(e.ApiRequestException.ToString());
+		}
+
+		private void OnReceiveMessage(object sender, MessageEventArgs e)
+		{
+			_logger.LogMessage($"{e.Message.Chat.Username}:{e.Message.Chat.Id}");
 		}
 	}
 }

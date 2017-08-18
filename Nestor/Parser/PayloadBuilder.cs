@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
 using System.Text;
-using Nestor.Interfaces;
+using Nestor.Interfaces.Settings;
 
 namespace Nestor.Parser
 {
-	public class PayloadBuilder
+	internal class PayloadBuilder
 	{
-		public string Build(ISettings settings)
+		internal string Build(IParserSettings settings)
 		{
 			var sb = new StringBuilder();
 

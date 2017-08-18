@@ -1,7 +1,8 @@
-﻿namespace Nestor.Interfaces
+﻿namespace Nestor.Interfaces.Settings
 {
-	public interface ISettings
+	public interface IParserSettings
 	{
+		int ParsingDelay { get; set; }
 		double CenterLat { get; set; }
 		double CenterLng { get; set; }
 		double Lat1 { get; set; }

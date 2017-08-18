@@ -4,63 +4,30 @@ namespace Nestor.DAL
 {
     public class DatabaseProvider : IDatabaseProvider
     {
-        private NestsContext context;
-        private INestRepository nestsRepository;
-        private INestInfoRepository nestsInfoRepository;
-        private IPokemonRepository pokemonsRepository;
+        private readonly NestsContext _context;
+        private INestRepository _nestsRepository;
+        private INestInfoRepository _nestsInfoRepository;
+        private IPokemonRepository _pokemonsRepository;
 
         public DatabaseProvider(string connectionString)
         {
-            context = new NestsContext(connectionString);
+            _context = new NestsContext(connectionString);
         }
 
-        public INestInfoRepository NestsInfoRepository
-        {
-            get
-            {
-                if (nestsInfoRepository == null)
-                {
-                    nestsInfoRepository = new NestInfoRepository(context);
-                }
-                return nestsInfoRepository;
-            }
-        }
+        public INestInfoRepository NestsInfoRepository => _nestsInfoRepository ?? (_nestsInfoRepository = new NestInfoRepository(_context));
 
-        public INestRepository NestsRepository
-        {
-            get
-            {
-                if (nestsRepository == null)
-                {
-                    nestsRepository = new NestRepository(context);
-                }
-                return nestsRepository;
-            }
-        }
+	    public INestRepository NestsRepository => _nestsRepository ?? (_nestsRepository = new NestRepository(_context));
 
-        public IPokemonRepository PokemonsRepository
-        {
-            get
-            {
-                if (pokemonsRepository == null)
-                {
-                    pokemonsRepository = new PokemonRepository(context);
-                }
-                return pokemonsRepository;
-            }
-        }
+	    public IPokemonRepository PokemonsRepository => _pokemonsRepository ?? (_pokemonsRepository = new PokemonRepository(_context));
 
-        public void Save()
-        {
-            context.SaveChanges();
+	    public void Save()
+	    {
+			_context.SaveChanges();
         }
 
         public void Dispose()
         {
-            if (context != null)
-            {
-                context.Dispose();
-            }
+	        _context?.Dispose();
         }
     }
 }
