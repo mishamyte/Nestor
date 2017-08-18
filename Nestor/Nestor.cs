@@ -29,7 +29,7 @@ namespace Nestor
 
 			_theSilphRoadProvider = new TheSilphRoadProvider(parserSettings);
 			_parser = new Parser.Parser(_theSilphRoadProvider);
-			_dbProvider = new DatabaseProvider(dbSettings.ConnectionString);
+			_dbProvider = new DatabaseProvider(dbSettings);
 			_bot = new Bot(botSettings, _logger);
 		}
 

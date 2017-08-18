@@ -1,4 +1,5 @@
 ﻿using Nestor.Interfaces;
+using Nestor.Interfaces.Settings;
 
 namespace Nestor.DAL
 {
@@ -9,9 +10,9 @@ namespace Nestor.DAL
         private INestInfoRepository _nestsInfoRepository;
         private IPokemonRepository _pokemonsRepository;
 
-        public DatabaseProvider(string connectionString)
+        public DatabaseProvider(IDbSettings dbSettings)
         {
-            _context = new NestsContext(connectionString);
+            _context = new NestsContext(dbSettings);
         }
 
         public INestInfoRepository NestsInfoRepository => _nestsInfoRepository ?? (_nestsInfoRepository = new NestInfoRepository(_context));
