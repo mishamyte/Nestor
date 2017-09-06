@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Nestor.Interfaces
 {
@@ -6,5 +7,6 @@ namespace Nestor.Interfaces
 	{
 		Task SendMessage(string text);
 		Task SendLocation(float latitude, float longitude);
+		Task SendImage(Uri uri, string caption);
 	}
 }

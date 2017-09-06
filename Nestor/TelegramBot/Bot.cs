@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Nestor.Interfaces;
 using Nestor.Interfaces.Settings;
 using Telegram.Bot;
 using Telegram.Bot.Args;
+using Telegram.Bot.Types;
 
 namespace Nestor.TelegramBot
 {
@@ -31,6 +33,11 @@ namespace Nestor.TelegramBot
 		{
 			await _client.SendLocationAsync(_settings.ChatId, latitude, longitude);
 		}
+
+		public async Task SendImage(Uri uri, string caption = "")
+		{
+			await _client.SendPhotoAsync(_settings.ChatId, new FileToSend(uri), caption);
+		} 
 
 		private void InitiateBot()
 		{

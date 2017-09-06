@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Timers;
 using Nestor.DAL;
 using Nestor.Interfaces;
@@ -16,17 +18,20 @@ namespace Nestor
 		private readonly Timer _timer;
 		private readonly Parser.Parser _parser;
 		private readonly TheSilphRoadProvider _theSilphRoadProvider;
+		private readonly IGlobalSettings _globalSettings;
 		private readonly IDatabaseProvider _dbProvider;
 		private readonly IBotProvider _bot;
 		private readonly ILogger _logger;
 
-		public Nestor(IParserSettings parserSettings, IBotSettings botSettings, IDbSettings dbSettings, ILogger logger = null)
+
+		public Nestor(IParserSettings parserSettings, IBotSettings botSettings, IDbSettings dbSettings, IGlobalSettings globalSettings, ILogger logger = null)
 		{
 			_logger = logger ?? new DefaultConsoleLogger();
 
 			_timer = new Timer(parserSettings.ParsingDelay);
 			_timer.Elapsed += Tick;
 
+			_globalSettings = globalSettings;
 			_theSilphRoadProvider = new TheSilphRoadProvider(parserSettings);
 			_parser = new Parser.Parser(_theSilphRoadProvider);
 			_dbProvider = new DatabaseProvider(dbSettings.ConnectionString);
@@ -86,7 +91,50 @@ namespace Nestor
 
 		private void Notify(Nest nest)
 		{
-			_bot.SendMessage($"{nest.Id} {nest.Pokemon.Name}");
+			switch (_globalSettings.MessageType)
+			{
+				case MessageType.Image:
+					{
+						NotifyWithImage(nest);
+						break;
+					}
+				case MessageType.Location:
+					{
+						NotifyWithLocation(nest);
+						break;
+					}
+				default:
+					{
+						NotifyWithImage(nest);
+						break;
+					}
+			}
+		}
+
+		private void NotifyWithImage(Nest nest)
+		{
+			var descriptionString = GetDescriptonMessage(nest) +
+			                        $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
+			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _globalSettings.GoogleMapsKey)), descriptionString);
+		}
+
+		private void NotifyWithLocation(Nest nest)
+		{			
+			_bot.SendMessage(GetDescriptonMessage(nest));
+			_bot.SendLocation((float)nest.Lat, (float)nest.Lng);
+		}
+
+		private string GetDescriptonMessage(Nest nest)
+		{
+			var nestInfo = _dbProvider.NestsInfoRepository.GetById(nest.Id);
+			var sb = new StringBuilder();
+			if (nestInfo != null)
+			{
+				sb.AppendLine(nestInfo.HashtagName != null ? $"{nestInfo.Name} #{nestInfo.HashtagName}" : $"{nestInfo.Name}");
+				sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
+			}
+
+			return sb.ToString();
 		}
 
 		private Nest AttachPokemonEntity(Nest nest, int pokemonId)

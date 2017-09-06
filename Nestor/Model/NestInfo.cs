@@ -2,6 +2,7 @@
 
 namespace Nestor.Model
 {
+	[Table("NestsInfo")]
 	public class NestInfo
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]

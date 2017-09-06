@@ -85,6 +85,7 @@
     <Compile Include="Interfaces\INestRepository.cs" />
     <Compile Include="Interfaces\IParser.cs" />
     <Compile Include="Interfaces\IPokemonRepository.cs" />
+    <Compile Include="Interfaces\Settings\IGlobalSettings.cs" />
     <Compile Include="Interfaces\Settings\IParserSettings.cs" />
     <Compile Include="Model\Nest.cs" />
     <Compile Include="Model\NestInfo.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="TelegramBot\Bot.cs" />
     <Compile Include="Utils\DefaultConsoleLogger.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="Utils\GoogleMapsUrlBuilder.cs" />
     <Compile Include="Utils\JsonDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
