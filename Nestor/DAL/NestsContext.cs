@@ -8,12 +8,12 @@ namespace Nestor.DAL
 {
     public class NestsContext : DbContext
     {
-        private const string defaultSchema = "nestor";
-        private IDbSettings dbSettings;
+        private const string DefaultSchema = "nestor";
+        private readonly IDbSettings _dbSettings;
 
         public NestsContext(IDbSettings dbSettings) : base(dbSettings.ConnectionString)
         {
-            this.dbSettings = dbSettings;
+            _dbSettings = dbSettings;
         }
 
         public DbSet<Nest> Nests { get; set; }
@@ -25,11 +25,11 @@ namespace Nestor.DAL
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.HasDefaultSchema(
-                string.IsNullOrWhiteSpace(dbSettings.Schema) ?
-                defaultSchema :
-                dbSettings.Schema);
+                string.IsNullOrWhiteSpace(_dbSettings.Schema) ?
+                DefaultSchema :
+                _dbSettings.Schema);
 
-            if (dbSettings.LowerFirstLetter)
+            if (_dbSettings.LowerFirstLetter)
             {
                 modelBuilder.Properties().Configure(c =>
                     c.HasColumnName(ToLower(c.ClrPropertyInfo.Name, false)));
