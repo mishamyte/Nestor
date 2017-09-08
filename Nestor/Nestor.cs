@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Timers;
 using Nestor.DAL;
 using Nestor.Interfaces;
@@ -131,8 +132,8 @@ namespace Nestor
 			if (nestInfo != null)
 			{
 				sb.AppendLine(nestInfo.HashtagName != null ? $"{nestInfo.Name} #{nestInfo.HashtagName}" : $"{nestInfo.Name}");
-				sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 			}
+			sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
 			return sb.ToString();
 		}

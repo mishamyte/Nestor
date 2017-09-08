@@ -15,7 +15,7 @@ namespace Nestor.Utils
 			sb.Append("&zoom=15");
 			sb.Append("&size=600x400");
 			sb.Append("&maptype=roadmap");
-			sb.Append($"&markers=icon:http://pokeliga.com/pictures/sprites/{nest.PokemonId.ToString().PadLeft(3,'0')}.gif");
+			sb.Append($"&markers=icon:http://pokeliga.com/pictures/sprites/emerald/{nest.PokemonId.ToString().PadLeft(3,'0')}.png");
 			sb.Append($"%7C{nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}");
 			sb.Append($"&key={gmapsKey}");
 

@@ -26,7 +26,7 @@ namespace Nestor.DAL
 			_context.SaveChanges();
         }
 
-        public void Dispose()
+	    public void Dispose()
         {
 	        _context?.Dispose();
         }
