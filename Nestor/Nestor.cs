@@ -63,6 +63,7 @@ namespace Nestor
 					if (silphNest.PokemonId != dbNest.PokemonId)
 					{
 						var nest = AttachPokemonEntity(dbNest, silphNest.PokemonId);
+						nest.LastMigration = _globalSettings.MigrationNumber;
 						UpdateNest(nest);
 						Notify(nest);
 					}
@@ -70,6 +71,7 @@ namespace Nestor
 				else
 				{
 					var nest = AttachPokemonEntity(silphNest, silphNest.PokemonId);
+					nest.LastMigration = _globalSettings.MigrationNumber;
 					AddNest(nest);
 					Notify(nest);
 				}

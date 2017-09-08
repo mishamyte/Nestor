@@ -14,6 +14,7 @@ namespace Nestor.Model
 		public double Lat { get; set; }
 		[JsonProperty("ln")]
 		public double Lng { get; set; }
+		public int LastMigration { get; set; }
 		public virtual Pokemon Pokemon { get; set; }
 	}
 }
