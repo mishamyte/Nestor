@@ -69,6 +69,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\NestsDbConfiguration.cs" />
     <Compile Include="Interfaces\IBotProvider.cs" />
     <Compile Include="Interfaces\Settings\IBotSettings.cs" />
     <Compile Include="Interfaces\Settings\IDbSettings.cs" />
