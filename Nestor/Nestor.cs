@@ -2,7 +2,6 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 using Nestor.DAL;
 using Nestor.Interfaces;
@@ -63,9 +62,10 @@ namespace Nestor
 					if (silphNest.PokemonId != dbNest.PokemonId)
 					{
 						var nest = AttachPokemonEntity(dbNest, silphNest.PokemonId);
+						var isUpdate = dbNest.LastMigration == _globalSettings.MigrationNumber;
 						nest.LastMigration = _globalSettings.MigrationNumber;
 						UpdateNest(nest);
-						Notify(nest);
+						Notify(nest, isUpdate);
 					}
 				}
 				else
@@ -92,38 +92,44 @@ namespace Nestor
 			_logger.LogMessage($"NEST UPDATED: {nest.Id}\t{nest.Pokemon.Name}");
 		}
 
-		private void Notify(Nest nest)
+		private void Notify(Nest nest, bool isUpdate = false)
 		{
 			switch (_globalSettings.MessageType)
 			{
 				case MessageType.Image:
 					{
-						NotifyWithImage(nest);
+						NotifyWithImage(nest, isUpdate);
 						break;
 					}
 				case MessageType.Location:
 					{
-						NotifyWithLocation(nest);
+						NotifyWithLocation(nest, isUpdate);
 						break;
 					}
 				default:
 					{
-						NotifyWithImage(nest);
+						NotifyWithImage(nest, isUpdate);
 						break;
 					}
 			}
 		}
 
-		private void NotifyWithImage(Nest nest)
+		private void NotifyWithImage(Nest nest, bool isUpdate)
 		{
-			var descriptionString = GetDescriptonMessage(nest) +
-									$"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
+			var descriptionString = isUpdate
+				? $"NEST INFO UPDATED:{Environment.NewLine}" + GetDescriptonMessage(nest) +
+				  $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}"
+				: GetDescriptonMessage(nest) +
+				  $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
 			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _globalSettings.GoogleMapsKey)), descriptionString);
 		}
 
-		private void NotifyWithLocation(Nest nest)
+		private void NotifyWithLocation(Nest nest, bool isUpdate)
 		{
-			_bot.SendMessage(GetDescriptonMessage(nest));
+			var descriptionString = isUpdate
+				? $"NEST INFO UPDATED:{Environment.NewLine}" + GetDescriptonMessage(nest)
+				: GetDescriptonMessage(nest);
+			_bot.SendMessage(descriptionString);
 			_bot.SendLocation((float)nest.Lat, (float)nest.Lng);
 		}
 
@@ -133,9 +139,9 @@ namespace Nestor
 			var sb = new StringBuilder();
 			if (nestInfo != null)
 			{
-				sb.AppendLine(nestInfo.HashtagName != null ? 
-					$"{nestInfo.Name} #{nestInfo.HashtagName} {GetNestTypeName(nest.NestType)}" : 
-					$"{nestInfo.Name} {GetNestTypeName(nest.NestType)}");
+				sb.AppendLine(nestInfo.HashtagName != null
+					? $"{nestInfo.Name} #{nestInfo.HashtagName} {GetNestTypeName(nest.NestType)}"
+					: $"{nestInfo.Name} {GetNestTypeName(nest.NestType)}");
 			}
 			sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
