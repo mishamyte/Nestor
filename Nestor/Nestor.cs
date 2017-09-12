@@ -140,28 +140,29 @@ namespace Nestor
 			if (nestInfo != null)
 			{
 				sb.AppendLine(nestInfo.HashtagName != null
-					? $"{nestInfo.Name} #{nestInfo.HashtagName} {GetNestTypeName(nest.NestType)}"
-					: $"{nestInfo.Name} {GetNestTypeName(nest.NestType)}");
+					? $"{nestInfo.Name} #{nestInfo.HashtagName}"
+					: $"{nestInfo.Name}");
 			}
+			sb.AppendLine(GetNestTypeName(nest.NestType));
 			sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
 			return sb.ToString();
 		}
 
-		private string GetNestTypeName(NestType nestType)
+		private static string GetNestTypeName(NestType nestType)
 		{
 			switch (nestType)
 			{
 				case NestType.Cluster:
-					return "Cluster spawn";
+					return "CLUSTER SPAWN";
 				case NestType.FrequentSpawnArea:
-					return "Frequent spawn area";
+					return "FREQUENT SPAWN AREA";
 				case NestType.FrequentSpawnPoint:
-					return "Frequent spawn point";
+					return "FREQUENT SPAWN POINT";
 				case NestType.Unknown:
-					return "Unknown nest type";
+					return "UNKNOWN NEST TYPE";
 				default:
-					return "Nest type recognition error";
+					return string.Empty;
 			}
 		}
 
