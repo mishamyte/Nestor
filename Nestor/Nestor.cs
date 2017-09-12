@@ -117,12 +117,12 @@ namespace Nestor
 		private void NotifyWithImage(Nest nest)
 		{
 			var descriptionString = GetDescriptonMessage(nest) +
-			                        $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
+									$"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
 			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _globalSettings.GoogleMapsKey)), descriptionString);
 		}
 
 		private void NotifyWithLocation(Nest nest)
-		{			
+		{
 			_bot.SendMessage(GetDescriptonMessage(nest));
 			_bot.SendLocation((float)nest.Lat, (float)nest.Lng);
 		}
@@ -133,11 +133,30 @@ namespace Nestor
 			var sb = new StringBuilder();
 			if (nestInfo != null)
 			{
-				sb.AppendLine(nestInfo.HashtagName != null ? $"{nestInfo.Name} #{nestInfo.HashtagName}" : $"{nestInfo.Name}");
+				sb.AppendLine(nestInfo.HashtagName != null ? 
+					$"{nestInfo.Name} #{nestInfo.HashtagName} {GetNestTypeName(nest.NestType)}" : 
+					$"{nestInfo.Name} {GetNestTypeName(nest.NestType)}");
 			}
 			sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
 			return sb.ToString();
+		}
+
+		private string GetNestTypeName(NestType nestType)
+		{
+			switch (nestType)
+			{
+				case NestType.Cluster:
+					return "Cluster spawn";
+				case NestType.FrequentSpawnArea:
+					return "Frequent spawn area";
+				case NestType.FrequentSpawnPoint:
+					return "Frequent spawn point";
+				case NestType.Unknown:
+					return "Unknown nest type";
+				default:
+					return "Nest type recognition error";
+			}
 		}
 
 		private Nest AttachPokemonEntity(Nest nest, int pokemonId)

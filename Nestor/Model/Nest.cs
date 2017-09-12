@@ -3,6 +3,14 @@ using Newtonsoft.Json;
 
 namespace Nestor.Model
 {
+	public enum NestType
+	{
+		Cluster = 1,
+		FrequentSpawnArea = 2,
+		FrequentSpawnPoint = 3,
+		Unknown = 4
+	}
+
 	public class Nest
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -10,6 +18,8 @@ namespace Nestor.Model
 		public int Id { get; set; }
 		[JsonProperty("pokemon_id")]
 		public int PokemonId { get; set; }
+		[JsonProperty("t")]
+		public NestType NestType { get; set; }
 		[JsonProperty("lt")]
 		public double Lat { get; set; }
 		[JsonProperty("ln")]
