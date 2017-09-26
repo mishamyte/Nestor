@@ -19,9 +19,10 @@ namespace Nestor
 		private readonly Parser.Parser _parser;
 		private readonly TheSilphRoadProvider _theSilphRoadProvider;
 		private readonly IGlobalSettings _globalSettings;
-		private readonly IDatabaseProvider _dbProvider;
+		private readonly IDbSettings _dbSettings;
 		private readonly IBotProvider _bot;
 		private readonly ILogger _logger;
+		private IDatabaseProvider _dbProvider;
 
 
 		public Nestor(IParserSettings parserSettings, IBotSettings botSettings, IDbSettings dbSettings, IGlobalSettings globalSettings, ILogger logger = null)
@@ -32,9 +33,9 @@ namespace Nestor
 			_timer.Elapsed += Tick;
 
 			_globalSettings = globalSettings;
+			_dbSettings = dbSettings;
 			_theSilphRoadProvider = new TheSilphRoadProvider(parserSettings);
 			_parser = new Parser.Parser(_theSilphRoadProvider);
-			_dbProvider = new DatabaseProvider(dbSettings);
 			_bot = new Bot(botSettings, _logger);
 		}
 
@@ -52,29 +53,48 @@ namespace Nestor
 
 		private async void Tick(object sender, EventArgs e)
 		{
-			var silphNests = await _parser.GetNests();
-			var dbNests = _dbProvider.NestsRepository.Get().ToList();
-			foreach (var silphNest in silphNests)
+			try
 			{
-				if (dbNests.Exists(x => x.Id == silphNest.Id))
+				_dbProvider = new DatabaseProvider(_dbSettings);
+				var silphNests = await _parser.GetNests();
+				var dbNests = _dbProvider.NestsRepository.Get().ToList();
+				if (silphNests != null)
 				{
-					var dbNest = dbNests.Find(x => x.Id == silphNest.Id);
-					if (silphNest.PokemonId != dbNest.PokemonId)
+					foreach (var silphNest in silphNests)
 					{
-						var nest = AttachPokemonEntity(dbNest, silphNest.PokemonId);
-						var isUpdate = dbNest.LastMigration == _globalSettings.MigrationNumber;
-						nest.LastMigration = _globalSettings.MigrationNumber;
-						UpdateNest(nest);
-						Notify(nest, isUpdate);
+						if (dbNests.Exists(x => x.Id == silphNest.Id))
+						{
+							var dbNest = dbNests.Find(x => x.Id == silphNest.Id);
+							if (silphNest.PokemonId != dbNest.PokemonId)
+							{
+								var nest = AttachPokemonEntity(dbNest, silphNest.PokemonId);
+								var isUpdate = dbNest.LastMigration == _globalSettings.MigrationNumber;
+								nest.LastMigration = _globalSettings.MigrationNumber;
+								UpdateNest(nest);
+								Notify(nest, isUpdate);
+							}
+						}
+						else
+						{
+							var nest = AttachPokemonEntity(silphNest, silphNest.PokemonId);
+							nest.LastMigration = _globalSettings.MigrationNumber;
+							AddNest(nest);
+							Notify(nest);
+						}
 					}
 				}
 				else
 				{
-					var nest = AttachPokemonEntity(silphNest, silphNest.PokemonId);
-					nest.LastMigration = _globalSettings.MigrationNumber;
-					AddNest(nest);
-					Notify(nest);
+					_logger.LogDebug("Empty parser response");
 				}
+			}
+			catch (Exception ex)
+			{
+				_logger.LogError(ex.ToString());
+			}
+			finally
+			{
+				Dispose();
 			}
 		}
 
@@ -178,6 +198,7 @@ namespace Nestor
 		{
 			_timer.Dispose();
 			_theSilphRoadProvider.Dispose();
+			_dbProvider.Dispose();
 			_logger.LogDebug("DISPOSED");
 		}
 	}
