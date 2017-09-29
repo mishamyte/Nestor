@@ -92,10 +92,6 @@ namespace Nestor
 			{
 				_logger.LogError(ex.ToString());
 			}
-			finally
-			{
-				Dispose();
-			}
 		}
 
 		private void AddNest(Nest nest)
