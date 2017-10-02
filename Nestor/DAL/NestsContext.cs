@@ -11,6 +11,11 @@ namespace Nestor.DAL
         private const string DefaultSchema = "nestor";
         private readonly IDbSettings _dbSettings;
 
+	    static NestsContext()
+	    {
+		    Database.SetInitializer<NestsContext>(null);
+	    }
+
         public NestsContext(IDbSettings dbSettings) : base(dbSettings.ConnectionString)
         {
             _dbSettings = dbSettings;
@@ -24,7 +29,7 @@ namespace Nestor.DAL
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema(
+			modelBuilder.HasDefaultSchema(
                 string.IsNullOrWhiteSpace(_dbSettings.Schema) ?
                 DefaultSchema :
                 _dbSettings.Schema);
