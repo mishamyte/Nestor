@@ -17,10 +17,7 @@ namespace Nestor.Parser
 			sb.Append($"&data[zoom]={settings.Zoom}");
 			sb.Append("&data[mapFilterValues][mapTypes][]=1");
 			sb.Append("&data[mapFilterValues][nestVerificationLevels][]=1");
-			sb.Append("&data[mapFilterValues][nestTypes][]=1");
-			sb.Append("&data[mapFilterValues][nestTypes][]=2");
-			sb.Append("&data[mapFilterValues][nestTypes][]=3");
-			sb.Append("&data[mapFilterValues][nestTypes][]=0");
+			sb.Append("&data[mapFilterValues][nestTypes][]=-1");
 			sb.Append($"&data[center_lat]={settings.CenterLat.ToString(CultureInfo.InvariantCulture)}");
 			sb.Append($"&data[center_lng]={settings.CenterLng.ToString(CultureInfo.InvariantCulture)}");
 

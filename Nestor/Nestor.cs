@@ -24,7 +24,6 @@ namespace Nestor
 		private readonly ILogger _logger;
 		private IDatabaseProvider _dbProvider;
 
-
 		public Nestor(IParserSettings parserSettings, IBotSettings botSettings, IDbSettings dbSettings, IGlobalSettings globalSettings, ILogger logger = null)
 		{
 			_logger = logger ?? new DefaultConsoleLogger();
