@@ -7,20 +7,20 @@ namespace Nestor.Utils
 	{
 		public void LogMessage(string message)
 		{
-			Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] {message}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] {message}");
 		}
 
 		public void LogError(string error)
 		{
 			Console.ForegroundColor = ConsoleColor.Red;
-			Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] ERROR: {error}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] ERROR: {error}");
 			Console.ResetColor();
 		}
 
 		public void LogDebug(string data)
 		{
 			Console.ForegroundColor = ConsoleColor.Yellow;
-			Console.WriteLine($"[{DateTime.Now.ToString("HH:mm:ss")}] DEBUG: {data}");
+			Console.WriteLine($"[{DateTime.Now:HH:mm:ss}] DEBUG: {data}");
 			Console.ResetColor();
 		}
 	}

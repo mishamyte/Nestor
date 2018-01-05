@@ -21,14 +21,11 @@ namespace Nestor.Parser
 		{
 			var responseString = await _provider.GetNestsJsonData();
 
-			JObject responseObject;
-
-			var success = JsonDeserializer.TryDeserializeObject(responseString, out responseObject);
+			var success = JsonDeserializer.TryDeserializeObject(responseString, out JObject responseObject);
 
 			if (success && responseObject?["localMarkers"] != null)
 			{
-				Dictionary<string, Nest> result;
-				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out result);
+				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out Dictionary<string, Nest> result);
 
 				if (success)
 				{

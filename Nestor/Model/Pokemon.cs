@@ -7,7 +7,9 @@ namespace Nestor.Model
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.None)]
 		public int Id { get; set; }
+
 		public string Name { get; set; }
+
 		public virtual ICollection<Nest> Nests { get; set; } 
 	}
 }
