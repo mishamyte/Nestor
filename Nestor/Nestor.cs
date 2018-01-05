@@ -64,7 +64,8 @@ namespace Nestor
 						if (dbNests.Exists(x => x.Id == silphNest.Id))
 						{
 							var dbNest = dbNests.Find(x => x.Id == silphNest.Id);
-							if (silphNest.PokemonId != dbNest.PokemonId)
+							if (silphNest.PokemonId != dbNest.PokemonId ||
+								dbNest.LastMigration != _globalSettings.MigrationNumber)
 							{
 								var nest = AttachPokemonEntity(dbNest, silphNest.PokemonId);
 								var isUpdate = dbNest.LastMigration == _globalSettings.MigrationNumber;
