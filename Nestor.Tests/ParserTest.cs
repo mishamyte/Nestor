@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Nestor.Interfaces;
+using Nestor.Parser;
 
 namespace Nestor.Tests
 {

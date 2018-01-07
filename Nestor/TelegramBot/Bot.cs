@@ -1,32 +1,30 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Nestor.Interfaces;
-using Nestor.Interfaces.Settings;
+using Nestor.Logging;
+using Nestor.Settings;
 using Telegram.Bot;
 using Telegram.Bot.Args;
 using Telegram.Bot.Types;
 
 namespace Nestor.TelegramBot
 {
-	public class Bot : IBotProvider
+	internal class Bot : IBotProvider
 	{
-		private readonly IBotSettings _settings;
-		private readonly ILogger _logger;
 		private static TelegramBotClient _client;
+		private readonly IBotSettings _settings;
 
-		public Bot(IBotSettings settings, ILogger logger)
+		internal Bot(IBotSettings settings)
 		{
 			_settings = settings;
-			_logger = logger;
 			_client = new TelegramBotClient(_settings.ApiKey);
 
 			InitiateBot();
 			_client.StartReceiving();
 		}
 
-		public async Task SendMessage(string text)
+		public async Task SendImage(Uri uri, string caption = "")
 		{
-			await _client.SendTextMessageAsync(_settings.ChatId, text);
+			await _client.SendPhotoAsync(_settings.ChatId, new FileToSend(uri), caption);
 		}
 
 		public async Task SendLocation(float latitude, float longitude)
@@ -34,25 +32,24 @@ namespace Nestor.TelegramBot
 			await _client.SendLocationAsync(_settings.ChatId, latitude, longitude);
 		}
 
-		public async Task SendImage(Uri uri, string caption = "")
+		public async Task SendMessage(string text)
 		{
-			await _client.SendPhotoAsync(_settings.ChatId, new FileToSend(uri), caption);
-		} 
-
-		private void InitiateBot()
+			await _client.SendTextMessageAsync(_settings.ChatId, text);
+		}
+		private static void InitiateBot()
 		{
 			_client.OnReceiveError += OnReceiveError;
 			_client.OnMessage += OnReceiveMessage;
 		}
 
-		private void OnReceiveError(object sender, ReceiveErrorEventArgs e)
+		private static void OnReceiveError(object sender, ReceiveErrorEventArgs e)
 		{
-			_logger.LogError(e.ApiRequestException.ToString());
+			Logger.LogError(e.ApiRequestException.ToString());
 		}
 
-		private void OnReceiveMessage(object sender, MessageEventArgs e)
+		private static void OnReceiveMessage(object sender, MessageEventArgs e)
 		{
-			_logger.LogMessage($"{e.Message.Chat.Username}:{e.Message.Chat.Id}");
+			Logger.LogMessage($"{e.Message.Chat.Username}:{e.Message.Chat.Id}");
 		}
 	}
 }

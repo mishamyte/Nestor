@@ -1,18 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nestor.Interfaces;
 using Nestor.Model;
 using Nestor.Utils;
 using Newtonsoft.Json.Linq;
 
 namespace Nestor.Parser
 {
-	public class Parser : IParser
+	internal class Parser : IParser
 	{
 		private readonly INestProvider _provider;
 
-		public Parser(INestProvider provider)
+		internal Parser(INestProvider provider)
 		{
 			_provider = provider;
 		}
@@ -33,6 +32,11 @@ namespace Nestor.Parser
 				}
 			}
 			return default(List<Nest>);
+		}
+
+		public void Dispose()
+		{
+			_provider.Dispose();
 		}
 	}
 }

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Nestor.Interfaces;
-using Nestor.Interfaces.Settings;
+using Nestor.Settings;
 
 namespace Nestor.Parser
 {
-	internal class TheSilphRoadProvider : INestProvider, IDisposable
+	internal class TheSilphRoadProvider : INestProvider
 	{
 		// It's recommended to instantiate one HttpClient per app
 		private static readonly HttpClient Client = new HttpClient();

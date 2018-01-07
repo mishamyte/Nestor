@@ -5,7 +5,7 @@ namespace Nestor.DAL
 {
     internal class NestsDbConfiguration : DbConfiguration
     {
-        public NestsDbConfiguration()
+	    internal NestsDbConfiguration()
         {
             var nestsInfoPlural = new CustomPluralizationEntry("NestInfo", "NestsInfo");
             var pluralizationService = new EnglishPluralizationService(new[] { nestsInfoPlural });

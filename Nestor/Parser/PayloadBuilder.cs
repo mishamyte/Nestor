@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
-using Nestor.Interfaces.Settings;
+using Nestor.Settings;
 
 namespace Nestor.Parser
 {

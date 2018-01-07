@@ -1,16 +1,16 @@
-﻿using Nestor.Interfaces;
-using Nestor.Interfaces.Settings;
+﻿using Nestor.DAL.Interfaces;
+using Nestor.Settings;
 
 namespace Nestor.DAL
 {
-    public class DatabaseProvider : IDatabaseProvider
+	internal class DatabaseProvider : IDatabaseProvider
     {
         private readonly NestsContext _context;
-        private INestRepository _nestsRepository;
-        private INestInfoRepository _nestsInfoRepository;
-        private IPokemonRepository _pokemonsRepository;
+		private INestInfoRepository _nestsInfoRepository;
+		private INestRepository _nestsRepository;
+		private IPokemonRepository _pokemonsRepository;
 
-        public DatabaseProvider(IDbSettings dbSettings)
+	    internal DatabaseProvider(IDbSettings dbSettings)
         {
             _context = new NestsContext(dbSettings);
         }
@@ -21,14 +21,14 @@ namespace Nestor.DAL
 
 	    public IPokemonRepository PokemonsRepository => _pokemonsRepository ?? (_pokemonsRepository = new PokemonRepository(_context));
 
-	    public void Save()
-	    {
-			_context.SaveChanges();
-        }
+		public void Dispose()
+		{
+			_context?.Dispose();
+		}
 
-	    public void Dispose()
-        {
-	        _context?.Dispose();
+		public void Save()
+		{
+			_context.SaveChanges();
         }
     }
 }
