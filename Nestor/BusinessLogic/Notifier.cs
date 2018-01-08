@@ -19,7 +19,7 @@ namespace Nestor.BusinessLogic
 
 		internal Notifier(ISettings settings)
 		{
-			_bot = new Bot(_settings.BotSettings);
+			_bot = new Bot(settings.BotSettings);
 
 			_settings = settings;
 
