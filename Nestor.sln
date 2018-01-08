@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor", "Nestor\Nestor.csproj", "{5D7E8C4C-C131-46A7-A7A8-1A764911EC95}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "Nestor.Tests\Nestor.Tests.csproj", "{D4B5838C-F099-4200-A058-7ABBF35A4AF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Service", "Nestor.Service\Nestor.Service.csproj", "{6E4914D5-A442-4248-8A44-5A6845310D9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{D4B5838C-F099-4200-A058-7ABBF35A4AF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4B5838C-F099-4200-A058-7ABBF35A4AF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4B5838C-F099-4200-A058-7ABBF35A4AF1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E4914D5-A442-4248-8A44-5A6845310D9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E4914D5-A442-4248-8A44-5A6845310D9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E4914D5-A442-4248-8A44-5A6845310D9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E4914D5-A442-4248-8A44-5A6845310D9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5F4C61E1-3C6A-4D21-AF01-5354D5915CEA}
 	EndGlobalSection
 EndGlobal
