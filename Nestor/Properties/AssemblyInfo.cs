@@ -19,7 +19,8 @@ using System.Runtime.CompilerServices;
 // COM, set the ComVisible attribute to true on that type.
 [assembly: ComVisible(false)]
 
-[assembly:InternalsVisibleTo("Nestor.Tests")]
+[assembly: InternalsVisibleTo("Nestor.Tests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("5d7e8c4c-c131-46a7-a7a8-1a764911ec95")]

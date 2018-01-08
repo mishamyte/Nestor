@@ -36,6 +36,7 @@ namespace Nestor.TelegramBot
 		{
 			await _client.SendTextMessageAsync(_settings.ChatId, text);
 		}
+
 		private static void InitiateBot()
 		{
 			_client.OnReceiveError += OnReceiveError;

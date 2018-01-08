@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nestor.DAL;
+using Nestor.DAL.Interfaces;
 using Nestor.DTO;
 using Nestor.Logging;
 using Nestor.Model;
@@ -16,19 +17,31 @@ namespace Nestor.BusinessLogic
 	{
 		private readonly IParser _parser;
 		private readonly ISettings _settings;
+		private readonly Func<IDatabaseProvider> _getDbProvider;
 
 		internal NestsWatcher(ISettings settings)
 		{
 			_parser = new Parser.Parser(new TheSilphRoadProvider(settings.ParserSettings));
 
 			_settings = settings;
+
+			_getDbProvider = () => new DatabaseProvider(settings.DbSettings);
+		}
+
+		internal NestsWatcher(ISettings settings, IParser parser, Func<IDatabaseProvider> getDbProvider)
+		{
+			_parser = parser;
+
+			_settings = settings;
+
+			_getDbProvider = getDbProvider;
 		}
 
 		public async Task<IList<NestDto>> GetMissingAndOutdatedNests()
 		{
 			try
 			{
-				using (var dbProvider = new DatabaseProvider(_settings.DbSettings))
+				using (var dbProvider = _getDbProvider())
 				{
 					var silphNests = await _parser.GetNests();
 					var dbNests = dbProvider.NestsRepository.Get().ToList();
@@ -105,7 +118,7 @@ namespace Nestor.BusinessLogic
 		{
 			try
 			{
-				using (var dbProvider = new DatabaseProvider(_settings.DbSettings))
+				using (var dbProvider = _getDbProvider())
 				{
 					dbProvider.NestsRepository.Insert(nest);
 					dbProvider.Save();
@@ -123,7 +136,7 @@ namespace Nestor.BusinessLogic
 		{
 			try
 			{
-				using (var dbProvider = new DatabaseProvider(_settings.DbSettings))
+				using (var dbProvider = _getDbProvider())
 				{
 					var pokemon = dbProvider.PokemonsRepository.GetById(pokemonId);
 					nest.PokemonId = pokemon.Id;
@@ -159,7 +172,7 @@ namespace Nestor.BusinessLogic
 		{
 			try
 			{
-				using (var dbProvider = new DatabaseProvider(_settings.DbSettings))
+				using (var dbProvider = _getDbProvider())
 				{
 					dbProvider.NestsRepository.Update(nest);
 					dbProvider.Save();

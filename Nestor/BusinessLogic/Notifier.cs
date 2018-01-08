@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Text;
 using Nestor.DAL;
+using Nestor.DAL.Interfaces;
 using Nestor.Logging;
 using Nestor.Model;
 using Nestor.Settings;
@@ -14,12 +15,24 @@ namespace Nestor.BusinessLogic
 	{
 		private readonly IBotProvider _bot;
 		private readonly ISettings _settings;
+		private readonly Func<IDatabaseProvider> _getDbProvider;
 
 		internal Notifier(ISettings settings)
 		{
+			_bot = new Bot(_settings.BotSettings);
+
 			_settings = settings;
 
-			_bot = new Bot(_settings.BotSettings);
+			_getDbProvider = () => new DatabaseProvider(settings.DbSettings);
+		}
+
+		internal Notifier(ISettings settings, IBotProvider botProvider, Func<IDatabaseProvider> getDbProvider)
+		{
+			_bot = botProvider;
+
+			_settings = settings;
+
+			_getDbProvider = getDbProvider;
 		}
 
 		public void Notify(Nest nest, bool isUpdate = false)
@@ -37,10 +50,7 @@ namespace Nestor.BusinessLogic
 						break;
 					}
 				default:
-					{
-						NotifyWithImage(nest, isUpdate);
-						break;
-					}
+					throw new ArgumentOutOfRangeException($"Unknown message type {_settings.GlobalSettings.MessageType}");
 			}
 		}
 
@@ -65,20 +75,23 @@ namespace Nestor.BusinessLogic
 		{
 			try
 			{
-				var dbProvider = new DatabaseProvider(_settings.DbSettings);
-				var nestInfo = dbProvider.NestsInfoRepository.GetById(nest.Id);
-				var sb = new StringBuilder();
-
-				if (nestInfo != null)
+				using (var dbProvider = _getDbProvider())
 				{
-					sb.AppendLine(nestInfo.HashtagName != null
-						? $"{nestInfo.Name} #{nestInfo.HashtagName}"
-						: $"{nestInfo.Name}");
-				}
-				sb.AppendLine(GetNestTypeName(nest.NestType));
-				sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_settings.GlobalSettings.MigrationNumber}");
 
-				return sb.ToString();
+					var nestInfo = dbProvider.NestsInfoRepository.GetById(nest.Id);
+					var sb = new StringBuilder();
+
+					if (nestInfo != null)
+					{
+						sb.AppendLine(nestInfo.HashtagName != null
+							? $"{nestInfo.Name} #{nestInfo.HashtagName}"
+							: $"{nestInfo.Name}");
+					}
+					sb.AppendLine(GetNestTypeName(nest.NestType));
+					sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_settings.GlobalSettings.MigrationNumber}");
+
+					return sb.ToString();
+				}
 			}
 			catch (Exception ex)
 			{
