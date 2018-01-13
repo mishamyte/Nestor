@@ -20,6 +20,8 @@ namespace Nestor.Tests
 			var settingsMock = new Mock<ISettings>();
 			settingsMock.Setup(m => m.GlobalSettings.MessageType)
 				.Returns(MessageType.Image);
+			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
+				.Returns("");
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))
@@ -119,6 +121,8 @@ namespace Nestor.Tests
 				.Returns(MessageType.Image);
 			settingsMock.Setup(m => m.GlobalSettings.MigrationNumber)
 				.Returns(42);
+			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
+				.Returns("");
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))
@@ -165,6 +169,8 @@ namespace Nestor.Tests
 				.Returns(MessageType.Image);
 			settingsMock.Setup(m => m.GlobalSettings.MigrationNumber)
 				.Returns(42);
+			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
+				.Returns("");
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))

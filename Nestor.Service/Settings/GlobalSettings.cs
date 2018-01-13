@@ -9,5 +9,7 @@ namespace Nestor.Service.Settings
 		public MessageType MessageType { get; set; }
 
 		public int MigrationNumber { get; set; }
+
+		public string IconsUrlFormat { get; set; }
 	}
 }

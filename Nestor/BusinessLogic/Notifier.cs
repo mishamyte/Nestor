@@ -108,7 +108,7 @@ namespace Nestor.BusinessLogic
 				: GetDescriptionMessage(nest) +
 				  $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
 
-			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _settings.GlobalSettings.GoogleMapsKey)), descriptionString);
+			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _settings.GlobalSettings.GoogleMapsKey, _settings.GlobalSettings.IconsUrlFormat)), descriptionString);
 		}
 
 		private void NotifyWithLocation(Nest nest, bool isUpdate)

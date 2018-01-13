@@ -11,6 +11,8 @@ namespace Nestor.Settings
 		MessageType MessageType { get; set; }
 
 		string GoogleMapsKey { get; set; }
+
+		string IconsUrlFormat { get; set; }
 	}
 
 	public enum MessageType
