@@ -37,20 +37,23 @@ namespace Nestor.BusinessLogic
 
 		public void Notify(Nest nest, bool isUpdate = false)
 		{
-			switch (_settings.GlobalSettings.MessageType)
+			if (!IsIgnored(nest))
 			{
-				case MessageType.Image:
+				switch (_settings.GlobalSettings.MessageType)
+				{
+					case MessageType.Image:
 					{
 						NotifyWithImage(nest, isUpdate);
 						break;
 					}
-				case MessageType.Location:
+					case MessageType.Location:
 					{
 						NotifyWithLocation(nest, isUpdate);
 						break;
 					}
-				default:
-					throw new ArgumentOutOfRangeException($"Unknown message type {_settings.GlobalSettings.MessageType}");
+					default:
+						throw new ArgumentOutOfRangeException($"Unknown message type {_settings.GlobalSettings.MessageType}");
+				}
 			}
 		}
 
@@ -98,6 +101,17 @@ namespace Nestor.BusinessLogic
 				Logger.LogError(ex.ToString());
 				throw;
 			}
+		}
+
+		private bool IsIgnored(Nest nest)
+		{
+			if (_settings.GlobalSettings.IgnoredPokemons.Contains(nest.PokemonId))
+			{
+				Logger.LogMessage(
+					$"Nest {nest.Id} with pokemon {nest.PokemonId} was exluded from notify. Reason: ignored pokemons list");
+				return true;
+			}
+			return false;
 		}
 
 		private void NotifyWithImage(Nest nest, bool isUpdate)

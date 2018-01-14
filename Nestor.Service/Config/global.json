@@ -2,5 +2,6 @@
   "MigrationNumber": 0,
   "MessageType": "Image",
   "GoogleMapsKey": "google maps key",
-  "IconsUrlFormat": "http://directive901.com/pokeicons/{0}.png"
+	"IconsUrlFormat": "http://directive901.com/pokeicons/{0}.png",
+	"IgnoredPokemons": [ 16, 21 ] 
 }

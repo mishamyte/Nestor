@@ -1,4 +1,5 @@
-﻿using Nestor.Settings;
+﻿using System.Collections.Generic;
+using Nestor.Settings;
 
 namespace Nestor.Service.Settings
 {
@@ -11,5 +12,7 @@ namespace Nestor.Service.Settings
 		public int MigrationNumber { get; set; }
 
 		public string IconsUrlFormat { get; set; }
+
+		public List<int> IgnoredPokemons { get; set; }
 	}
 }

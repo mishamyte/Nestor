@@ -59,7 +59,7 @@ namespace Nestor
 			catch (Exception ex)
 			{
 				Logger.LogError(ex.ToString());
-			}			
+			}
 		}
 
 		public void Dispose()

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
 namespace Nestor.Settings
@@ -13,6 +14,8 @@ namespace Nestor.Settings
 		string GoogleMapsKey { get; set; }
 
 		string IconsUrlFormat { get; set; }
+
+		List<int> IgnoredPokemons { get; set; }
 	}
 
 	public enum MessageType

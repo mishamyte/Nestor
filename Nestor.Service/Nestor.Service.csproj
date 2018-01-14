@@ -87,6 +87,38 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
+    <None Include="Config\bot.Debug.json">
+      <DependentUpon>bot.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\bot.Release.json">
+      <DependentUpon>bot.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\db.Debug.json">
+      <DependentUpon>db.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\db.Release.json">
+      <DependentUpon>db.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\global.Debug.json">
+      <DependentUpon>global.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\global.Release.json">
+      <DependentUpon>global.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\parser.Debug.json">
+      <DependentUpon>parser.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\parser.Release.json">
+      <DependentUpon>parser.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
