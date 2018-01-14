@@ -111,6 +111,14 @@ namespace Nestor.BusinessLogic
 					$"Nest {nest.Id} with pokemon {nest.PokemonId} was exluded from notify. Reason: ignored pokemons list");
 				return true;
 			}
+
+			if (_settings.GlobalSettings.IgnoredNests.Contains(nest.Id))
+			{
+				Logger.LogMessage(
+					$"Nest {nest.Id} with pokemon {nest.PokemonId} was exluded from notify. Reason: ignored nests list");
+				return true;
+			}
+
 			return false;
 		}
 

@@ -14,5 +14,7 @@ namespace Nestor.Service.Settings
 		public string IconsUrlFormat { get; set; }
 
 		public List<int> IgnoredPokemons { get; set; }
+
+		public List<int> IgnoredNests { get; set; }
 	}
 }

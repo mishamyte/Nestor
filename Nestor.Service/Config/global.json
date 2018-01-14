@@ -3,5 +3,6 @@
   "MessageType": "Image",
   "GoogleMapsKey": "google maps key",
 	"IconsUrlFormat": "http://directive901.com/pokeicons/{0}.png",
-	"IgnoredPokemons": [ 16, 21 ] 
+	"IgnoredPokemons": [ 16, 21 ],
+	"IgnoredNests": [] 
 }

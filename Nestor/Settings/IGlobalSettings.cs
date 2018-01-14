@@ -16,6 +16,8 @@ namespace Nestor.Settings
 		string IconsUrlFormat { get; set; }
 
 		List<int> IgnoredPokemons { get; set; }
+
+		List<int> IgnoredNests { get; set; }
 	}
 
 	public enum MessageType
