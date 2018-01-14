@@ -14,23 +14,23 @@ namespace Nestor.BusinessLogic
 	internal class Notifier : INotifier
 	{
 		private readonly IBotProvider _bot;
-		private readonly ISettings _settings;
+		private readonly IGlobalSettings _globalSettings;
 		private readonly Func<IDatabaseProvider> _getDbProvider;
 
 		internal Notifier(ISettings settings)
 		{
 			_bot = new Bot(settings.BotSettings);
 
-			_settings = settings;
+			_globalSettings = settings.GlobalSettings;
 
 			_getDbProvider = () => new DatabaseProvider(settings.DbSettings);
 		}
 
-		internal Notifier(ISettings settings, IBotProvider botProvider, Func<IDatabaseProvider> getDbProvider)
+		internal Notifier(IGlobalSettings globalSettings, IBotProvider botProvider, Func<IDatabaseProvider> getDbProvider)
 		{
 			_bot = botProvider;
 
-			_settings = settings;
+			_globalSettings = globalSettings;
 
 			_getDbProvider = getDbProvider;
 		}
@@ -39,7 +39,7 @@ namespace Nestor.BusinessLogic
 		{
 			if (!IsIgnored(nest))
 			{
-				switch (_settings.GlobalSettings.MessageType)
+				switch (_globalSettings.MessageType)
 				{
 					case MessageType.Image:
 					{
@@ -52,7 +52,7 @@ namespace Nestor.BusinessLogic
 						break;
 					}
 					default:
-						throw new ArgumentOutOfRangeException($"Unknown message type {_settings.GlobalSettings.MessageType}");
+						throw new ArgumentOutOfRangeException($"Unknown message type {_globalSettings.MessageType}");
 				}
 			}
 		}
@@ -91,7 +91,7 @@ namespace Nestor.BusinessLogic
 							: $"{nestInfo.Name}");
 					}
 					sb.AppendLine(GetNestTypeName(nest.NestType));
-					sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_settings.GlobalSettings.MigrationNumber}");
+					sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
 					return sb.ToString();
 				}
@@ -105,14 +105,14 @@ namespace Nestor.BusinessLogic
 
 		private bool IsIgnored(Nest nest)
 		{
-			if (_settings.GlobalSettings.IgnoredPokemons.Contains(nest.PokemonId))
+			if (_globalSettings.IgnoredPokemons.Contains(nest.PokemonId))
 			{
 				Logger.LogMessage(
 					$"Nest {nest.Id} with pokemon {nest.PokemonId} was exluded from notify. Reason: ignored pokemons list");
 				return true;
 			}
 
-			if (_settings.GlobalSettings.IgnoredNests.Contains(nest.Id))
+			if (_globalSettings.IgnoredNests.Contains(nest.Id))
 			{
 				Logger.LogMessage(
 					$"Nest {nest.Id} with pokemon {nest.PokemonId} was exluded from notify. Reason: ignored nests list");
@@ -130,7 +130,7 @@ namespace Nestor.BusinessLogic
 				: GetDescriptionMessage(nest) +
 				  $"Location: https://maps.google.com/?q={nest.Lat.ToString(CultureInfo.InvariantCulture)},{nest.Lng.ToString(CultureInfo.InvariantCulture)}";
 
-			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _settings.GlobalSettings.GoogleMapsKey, _settings.GlobalSettings.IconsUrlFormat)), descriptionString);
+			_bot.SendImage(new Uri(GoogleMapsUrlBuilder.GetUrlString(nest, _globalSettings.GoogleMapsKey, _globalSettings.IconsUrlFormat)), descriptionString);
 		}
 
 		private void NotifyWithLocation(Nest nest, bool isUpdate)

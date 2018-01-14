@@ -27,7 +27,7 @@ namespace Nestor.Tests
 			var parserNests = GetParserNests();
 			var dbNests = GetDbNests();
 
-			var settingsMock = GetSettingsMock();
+			var settingsMock = GetGlobalSettingsMock();
 
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
@@ -67,7 +67,7 @@ namespace Nestor.Tests
 				nest.LastMigration--;
 			}
 
-			var settingsMock = GetSettingsMock();
+			var settingsMock = GetGlobalSettingsMock();
 
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
@@ -109,7 +109,7 @@ namespace Nestor.Tests
 					logString += s;
 				});
 
-			var settingsMock = GetSettingsMock();
+			var settingsMock = GetGlobalSettingsMock();
 
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
@@ -253,13 +253,13 @@ namespace Nestor.Tests
 			return parserNests;
 		}
 
-		private static Mock<ISettings> GetSettingsMock()
+		private static Mock<IGlobalSettings> GetGlobalSettingsMock()
 		{
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MigrationNumber)
+			var mock = new Mock<IGlobalSettings>();
+			mock.Setup(m => m.MigrationNumber)
 				.Returns(MigrationNumber);
 
-			return settingsMock;
+			return mock;
 		}
 
 		private static void PrintNests(IEnumerable<NestDto> nests)

@@ -18,15 +18,7 @@ namespace Nestor.Tests
 		{
 			var imageWasSent = false;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
-				.Returns(MessageType.Image);
-			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
-				.Returns(string.Empty);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
-				.Returns(new List<int>());
+			var settingsMock = CreateGlobalSettingsMock();
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))
@@ -58,13 +50,9 @@ namespace Nestor.Tests
 		{
 			var locationWasSent = false;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.MessageType)
 				.Returns(MessageType.Location);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
-				.Returns(new List<int>());
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendLocation(It.IsAny<float>(), It.IsAny<float>()))
@@ -96,13 +84,9 @@ namespace Nestor.Tests
 		{
 			const int unknownMessageType = 999;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.MessageType)
 				.Returns((MessageType)unknownMessageType);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
-				.Returns(new List<int>());
 
 			var botMock = new Mock<IBotProvider>();
 
@@ -129,17 +113,9 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
-				.Returns(MessageType.Image);
-			settingsMock.Setup(m => m.GlobalSettings.MigrationNumber)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.MigrationNumber)
 				.Returns(42);
-			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
-				.Returns(string.Empty);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
-				.Returns(new List<int>());
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))
@@ -181,17 +157,9 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
-				.Returns(MessageType.Image);
-			settingsMock.Setup(m => m.GlobalSettings.MigrationNumber)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.MigrationNumber)
 				.Returns(42);
-			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
-				.Returns(string.Empty);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
-				.Returns(new List<int>());
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<Uri>(), It.IsAny<string>()))
@@ -233,12 +201,8 @@ namespace Nestor.Tests
 		{
 			var triggeredCounter = 0;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
-				.Returns(MessageType.Image);
-			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
-				.Returns(string.Empty);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.IgnoredPokemons)
 				.Returns(new List<int> { 16 });
 
 			var botMock = new Mock<IBotProvider>();
@@ -264,14 +228,8 @@ namespace Nestor.Tests
 		{
 			var triggeredCounter = 0;
 
-			var settingsMock = new Mock<ISettings>();
-			settingsMock.Setup(m => m.GlobalSettings.MessageType)
-				.Returns(MessageType.Image);
-			settingsMock.Setup(m => m.GlobalSettings.IconsUrlFormat)
-				.Returns(string.Empty);
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredPokemons)
-				.Returns(new List<int>());
-			settingsMock.Setup(m => m.GlobalSettings.IgnoredNests)
+			var settingsMock = CreateGlobalSettingsMock();
+			settingsMock.Setup(m => m.IgnoredNests)
 				.Returns(new List<int> { 42 });
 
 			var botMock = new Mock<IBotProvider>();
@@ -291,6 +249,21 @@ namespace Nestor.Tests
 			notifier.Notify(nest);
 
 			Assert.AreEqual(0, triggeredCounter);
+		}
+
+		private static Mock<IGlobalSettings> CreateGlobalSettingsMock()
+		{
+			var mock = new Mock<IGlobalSettings>();
+			mock.Setup(m => m.MessageType)
+				.Returns(MessageType.Image);
+			mock.Setup(m => m.IconsUrlFormat)
+				.Returns(string.Empty);
+			mock.Setup(m => m.IgnoredPokemons)
+				.Returns(new List<int>());
+			mock.Setup(m => m.IgnoredNests)
+				.Returns(new List<int>());
+
+			return mock;
 		}
 	}
 }

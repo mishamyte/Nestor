@@ -16,23 +16,23 @@ namespace Nestor.BusinessLogic
 	internal class NestsWatcher : INestsWatcher
 	{
 		private readonly IParser _parser;
-		private readonly ISettings _settings;
+		private readonly IGlobalSettings _globalSettings;
 		private readonly Func<IDatabaseProvider> _getDbProvider;
 
 		internal NestsWatcher(ISettings settings)
 		{
 			_parser = new Parser.Parser(new TheSilphRoadProvider(settings.ParserSettings));
 
-			_settings = settings;
+			_globalSettings = settings.GlobalSettings;
 
 			_getDbProvider = () => new DatabaseProvider(settings.DbSettings);
 		}
 
-		internal NestsWatcher(ISettings settings, IParser parser, Func<IDatabaseProvider> getDbProvider)
+		internal NestsWatcher(IGlobalSettings globalSettings, IParser parser, Func<IDatabaseProvider> getDbProvider)
 		{
 			_parser = parser;
 
-			_settings = settings;
+			_globalSettings = globalSettings;
 
 			_getDbProvider = getDbProvider;
 		}
@@ -56,7 +56,7 @@ namespace Nestor.BusinessLogic
 								var dbNest = dbNests.Find(x => x.Id == silphNest.Id);
 
 								if (dbNest.PokemonId != silphNest.PokemonId ||
-									dbNest.LastMigration != _settings.GlobalSettings.MigrationNumber)
+									dbNest.LastMigration != _globalSettings.MigrationNumber)
 								{
 									var finalNest = GetFinalNest(dbNest, silphNest.PokemonId);
 
@@ -157,7 +157,7 @@ namespace Nestor.BusinessLogic
 			try
 			{
 				var finalNest = AttachPokemonEntity(nest, pokemonId);
-				finalNest.LastMigration = _settings.GlobalSettings.MigrationNumber;
+				finalNest.LastMigration = _globalSettings.MigrationNumber;
 
 				return finalNest;
 			}
