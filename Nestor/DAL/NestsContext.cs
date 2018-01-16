@@ -22,7 +22,11 @@ namespace Nestor.DAL
 		}
 
 		public DbSet<Nest> Nests { get; set; }
+
 		public DbSet<NestInfo> NestsInfo { get; set; }
+
+		public DbSet<NestUpdate> NestsUpdates { get; set; }
+
 		public DbSet<Pokemon> Pokemons { get; set; }
 
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
