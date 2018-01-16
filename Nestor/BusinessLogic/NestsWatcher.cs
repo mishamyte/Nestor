@@ -109,6 +109,34 @@ namespace Nestor.BusinessLogic
 					throw new ArgumentOutOfRangeException($"Unexpected nest type {nestDto.NestType}");
 			}
 		}
+
+		public void RecordNestUpdateToHistory(Nest nest)
+		{
+			try
+			{
+				using (var dbProvider = _getDbProvider())
+				{
+					var updateRecord = new NestUpdate
+					{
+						NestId = nest.Id,
+						PokemonId = nest.PokemonId,
+						MigrationNumber = _globalSettings.MigrationNumber,
+						Timestamp = DateTime.Now
+					};
+
+					dbProvider.NestsUpdatesRepository.Insert(updateRecord);
+					dbProvider.Save();
+					Logger.LogMessage(
+						$"Nest {updateRecord.NestId} was updated in {updateRecord.Timestamp} with pokemon: {updateRecord.PokemonId}");
+				}
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex.ToString());
+				throw;
+			}
+		}
+
 		public void Dispose()
 		{
 			_parser.Dispose();

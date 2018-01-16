@@ -51,9 +51,12 @@
     <Compile Include="BusinessLogic\INotifier.cs" />
     <Compile Include="BusinessLogic\NestsWatcher.cs" />
     <Compile Include="BusinessLogic\Notifier.cs" />
+    <Compile Include="DAL.Interfaces\INestUpdateRepository.cs" />
     <Compile Include="DAL\NestsDbConfiguration.cs" />
+    <Compile Include="DAL\NestUpdateRepository.cs" />
     <Compile Include="DTO\NestDto.cs" />
     <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Model\NestUpdate.cs" />
     <Compile Include="Settings\ISettings.cs" />
     <Compile Include="TelegramBot\IBotProvider.cs" />
     <Compile Include="Settings\IBotSettings.cs" />

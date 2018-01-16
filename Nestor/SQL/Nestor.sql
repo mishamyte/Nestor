@@ -54,6 +54,11 @@ CREATE OR REPLACE VIEW "public"."NestsWithoutInfo" AS
 -- ----------------------------
 
 -- ----------------------------
+-- Primary Key structure for table Nests
+-- ----------------------------
+ALTER TABLE "public"."Nests" ADD PRIMARY KEY ("Id");
+
+-- ----------------------------
 -- Primary Key structure for table NestsInfo
 -- ----------------------------
 ALTER TABLE "public"."NestsInfo" ADD PRIMARY KEY ("Id");

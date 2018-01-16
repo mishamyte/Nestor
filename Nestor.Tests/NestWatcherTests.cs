@@ -142,6 +142,8 @@ namespace Nestor.Tests
 		{
 			var nestWasAdded = false;
 
+			var settingsMock = GetGlobalSettingsMock();
+
 			var nestDto = new NestDto
 			{
 				Nest = new Nest
@@ -161,8 +163,9 @@ namespace Nestor.Tests
 				{
 					nestWasAdded = nest.Id == nestDto.Nest.Id;
 				});
+			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
 
-			var watcher = new NestsWatcher(null, null, () => dbMock.Object);
+			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
 
 			watcher.ProcessNest(nestDto);
 
@@ -173,6 +176,8 @@ namespace Nestor.Tests
 		public void WatcherShouldProcessNestTypeOutdated()
 		{
 			var nestWasUpdated = false;
+
+			var settingsMock = GetGlobalSettingsMock();
 
 			var nestDto = new NestDto
 			{
@@ -193,8 +198,9 @@ namespace Nestor.Tests
 				{
 					nestWasUpdated = nest.Id == nestDto.Nest.Id;
 				});
+			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
 
-			var watcher = new NestsWatcher(null, null, () => dbMock.Object);
+			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
 
 			watcher.ProcessNest(nestDto);
 
@@ -204,15 +210,57 @@ namespace Nestor.Tests
 		[Test]
 		public void WatcherShouldThrowExceptionOnUnknownNestType()
 		{
+			var settingsMock = GetGlobalSettingsMock();
+
 			var nestDto = new NestDto
 			{
+				Nest = new Nest
+				{
+					Id = 42,
+					Pokemon = new Pokemon
+					{
+						Name = "Pikachu"
+					}
+				},
 				NestType = (NestType) 999
 			};
 
-			var watcher = new NestsWatcher(null, null, null);
+			var dbMock = new Mock<IDatabaseProvider>();
+			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
+
+			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
 
 			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => watcher.ProcessNest(nestDto));
 			Assert.AreEqual($"Unexpected nest type {nestDto.NestType}", exception.ParamName);
+		}
+
+		[Test]
+		public void WatcherShouldRecordHistoryCorrectly()
+		{
+			NestUpdate insertedDto = null;
+
+			var settingsMock = GetGlobalSettingsMock();
+
+			var dbMock = new Mock<IDatabaseProvider>();
+			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()))
+				.Callback<NestUpdate>(update =>
+				{
+					insertedDto = update;
+				});
+
+			var nest = new Nest
+			{
+				Id = 42,
+				PokemonId = 25
+			};
+
+			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
+			watcher.RecordNestUpdateToHistory(nest);
+
+			Assert.IsNotNull(insertedDto);
+			Assert.AreEqual(nest.Id, insertedDto.NestId);
+			Assert.AreEqual(nest.PokemonId, insertedDto.PokemonId);
+			Assert.AreEqual(MigrationNumber, insertedDto.MigrationNumber);
 		}
 
 		private static List<Nest> GetDbNests()

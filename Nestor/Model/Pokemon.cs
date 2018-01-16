@@ -10,6 +10,8 @@ namespace Nestor.Model
 
 		public string Name { get; set; }
 
-		public virtual ICollection<Nest> Nests { get; set; } 
+		public virtual ICollection<Nest> Nests { get; set; }
+
+		public virtual ICollection<NestUpdate> NestUpdates { get; set; }
 	}
 }

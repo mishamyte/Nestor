@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 
 namespace Nestor.Model
@@ -32,5 +33,7 @@ namespace Nestor.Model
 		public int LastMigration { get; set; }
 
 		public virtual Pokemon Pokemon { get; set; }
+
+		public virtual ICollection<NestUpdate> NestUpdates { get; set; }
 	}
 }

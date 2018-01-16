@@ -53,6 +53,7 @@ namespace Nestor
 				foreach (var nest in nests)
 				{
 					_nestsWatcher.ProcessNest(nest);
+					_nestsWatcher.RecordNestUpdateToHistory(nest.Nest);
 					_notifier.Notify(nest.Nest, nest.NestType == NestType.Outdated);
 				}
 			}

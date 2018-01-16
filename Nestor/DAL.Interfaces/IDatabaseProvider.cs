@@ -11,6 +11,8 @@ namespace Nestor.DAL.Interfaces
 
 		INestRepository NestsRepository { get; }
 
+	    INestUpdateRepository NestsUpdatesRepository { get; }
+
 		IPokemonRepository PokemonsRepository { get; }
 
         void Save();

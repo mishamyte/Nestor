@@ -8,7 +8,8 @@ namespace Nestor.DAL
 	    internal NestsDbConfiguration()
         {
             var nestsInfoPlural = new CustomPluralizationEntry("NestInfo", "NestsInfo");
-            var pluralizationService = new EnglishPluralizationService(new[] { nestsInfoPlural });
+			var nestsUpdatesPlural = new CustomPluralizationEntry("NestUpdate", "NestsUpdates");
+            var pluralizationService = new EnglishPluralizationService(new[] { nestsInfoPlural, nestsUpdatesPlural });
 
             SetPluralizationService(pluralizationService);
         }
