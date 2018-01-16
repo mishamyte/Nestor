@@ -58,22 +58,23 @@ namespace Nestor.BusinessLogic
 								if (dbNest.PokemonId != silphNest.PokemonId ||
 									dbNest.LastMigration != _globalSettings.MigrationNumber)
 								{
-									var finalNest = GetFinalNest(dbNest, silphNest.PokemonId);
+									dbNest.PokemonId = silphNest.PokemonId;
+									dbNest.LastMigration = _globalSettings.MigrationNumber;
 
 									resultingNests.Add(new NestDto
 									{
-										Nest = finalNest,
+										Nest = dbNest,
 										NestType = NestType.Outdated
 									});
 								}
 							}
 							else
 							{
-								var finalNest = GetFinalNest(silphNest, silphNest.PokemonId);
+								silphNest.LastMigration = _globalSettings.MigrationNumber;
 
 								resultingNests.Add(new NestDto
 								{
-									Nest = finalNest,
+									Nest = silphNest,
 									NestType = NestType.Missed
 								});
 							}
@@ -150,44 +151,8 @@ namespace Nestor.BusinessLogic
 				{
 					dbProvider.NestsRepository.Insert(nest);
 					dbProvider.Save();
-					Logger.LogMessage($"NEST ADDED: {nest.Id}\t{nest.Pokemon.Name}");
+					Logger.LogMessage($"NEST ADDED: {nest.Id}\t{nest.PokemonId}");
 				}
-			}
-			catch (Exception ex)
-			{
-				Logger.LogError(ex.ToString());
-				throw;
-			}
-		}
-
-		private Nest AttachPokemonEntity(Nest nest, int pokemonId)
-		{
-			try
-			{
-				using (var dbProvider = _getDbProvider())
-				{
-					var pokemon = dbProvider.PokemonsRepository.GetById(pokemonId);
-					nest.PokemonId = pokemon.Id;
-					nest.Pokemon = pokemon;
-
-					return nest;
-				}
-			}
-			catch (Exception ex)
-			{
-				Logger.LogError(ex.ToString());
-				throw;
-			}
-		}
-
-		private Nest GetFinalNest(Nest nest, int pokemonId)
-		{
-			try
-			{
-				var finalNest = AttachPokemonEntity(nest, pokemonId);
-				finalNest.LastMigration = _globalSettings.MigrationNumber;
-
-				return finalNest;
 			}
 			catch (Exception ex)
 			{
