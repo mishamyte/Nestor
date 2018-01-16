@@ -1,4 +1,15 @@
 -- ----------------------------
+-- Sequence structure for NestsUpdates_Id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."NestsUpdates_Id_seq";
+CREATE SEQUENCE "public"."NestsUpdates_Id_seq"
+ INCREMENT 1
+ MINVALUE 1
+ MAXVALUE 9223372036854775807
+ START 1
+ CACHE 1;
+ 
+-- ----------------------------
 -- Table structure for NestsUpdates
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."NestsUpdates";
