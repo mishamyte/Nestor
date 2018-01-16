@@ -18,6 +18,15 @@ namespace Nestor.Tests
 		{
 			var imageWasSent = false;
 
+			var nest = new Nest
+			{
+				NestType = NestType.Default,
+				Pokemon = new Pokemon
+				{
+					Name = "Pikachu"
+				}
+			};
+
 			var settingsMock = CreateGlobalSettingsMock();
 
 			var botMock = new Mock<IBotProvider>();
@@ -30,14 +39,8 @@ namespace Nestor.Tests
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsInfoRepository.GetById(It.IsAny<object>()))
 				.Returns(default(NestInfo));
-
-			var nest = new Nest
-			{
-				Pokemon = new Pokemon
-				{
-					Name = "Pikachu"
-				}
-			};
+			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
+				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object);
 			notifier.Notify(nest);
@@ -49,6 +52,15 @@ namespace Nestor.Tests
 		public void NotifierShouldProcessMessageTypeLocation()
 		{
 			var locationWasSent = false;
+
+			var nest = new Nest
+			{
+				NestType = NestType.Default,
+				Pokemon = new Pokemon
+				{
+					Name = "Pikachu"
+				}
+			};
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.MessageType)
@@ -64,14 +76,8 @@ namespace Nestor.Tests
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsInfoRepository.GetById(It.IsAny<object>()))
 				.Returns(default(NestInfo));
-
-			var nest = new Nest
-			{
-				Pokemon = new Pokemon
-				{
-					Name = "Pikachu"
-				}
-			};
+			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
+				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object);
 			notifier.Notify(nest);
@@ -113,6 +119,17 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
+			var nest = new Nest
+			{
+				Lat = 50.42,
+				Lng = 42.50,
+				NestType = NestType.Default,
+				Pokemon = new Pokemon
+				{
+					Name = "Pikachu"
+				}
+			};
+
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.MigrationNumber)
 				.Returns(42);
@@ -132,16 +149,8 @@ namespace Nestor.Tests
 					Id = 42,
 					Name = "Test Pikachu Nest"
 				});
-
-			var nest = new Nest
-			{
-				Lat = 50.42,
-				Lng = 42.50,
-				Pokemon = new Pokemon
-				{
-					Name = "Pikachu"
-				}
-			};
+			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
+				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object);
 			notifier.Notify(nest);
@@ -157,6 +166,17 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
+			var nest = new Nest
+			{
+				Lat = 50.42,
+				Lng = 42.50,
+				NestType = NestType.Default,
+				Pokemon = new Pokemon
+				{
+					Name = "Pikachu"
+				}
+			};
+
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.MigrationNumber)
 				.Returns(42);
@@ -176,16 +196,8 @@ namespace Nestor.Tests
 					Id = 42,
 					Name = "Test Pikachu Nest"
 				});
-
-			var nest = new Nest
-			{
-				Lat = 50.42,
-				Lng = 42.50,
-				Pokemon = new Pokemon
-				{
-					Name = "Pikachu"
-				}
-			};
+			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
+				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object);
 			notifier.Notify(nest, true);

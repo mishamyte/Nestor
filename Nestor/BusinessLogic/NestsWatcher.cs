@@ -58,12 +58,12 @@ namespace Nestor.BusinessLogic
 								if (dbNest.PokemonId != silphNest.PokemonId ||
 									dbNest.LastMigration != _globalSettings.MigrationNumber)
 								{
-									dbNest.PokemonId = silphNest.PokemonId;
-									dbNest.LastMigration = _globalSettings.MigrationNumber;
+									silphNest.IsRecommended = dbNest.IsRecommended;
+									silphNest.LastMigration = _globalSettings.MigrationNumber;
 
 									resultingNests.Add(new NestDto
 									{
-										Nest = dbNest,
+										Nest = silphNest,
 										NestType = NestType.Outdated
 									});
 								}
@@ -117,6 +117,8 @@ namespace Nestor.BusinessLogic
 			{
 				using (var dbProvider = _getDbProvider())
 				{
+					var pokemon = dbProvider.PokemonsRepository.GetById(nest.PokemonId);
+
 					var updateRecord = new NestUpdate
 					{
 						NestId = nest.Id,
@@ -128,7 +130,7 @@ namespace Nestor.BusinessLogic
 					dbProvider.NestsUpdatesRepository.Insert(updateRecord);
 					dbProvider.Save();
 					Logger.LogMessage(
-						$"Nest {updateRecord.NestId} was updated in {updateRecord.Timestamp} with pokemon: {updateRecord.PokemonId}");
+						$"Nest {updateRecord.NestId} was updated in {updateRecord.Timestamp} with pokemon: {pokemon.Name}");
 				}
 			}
 			catch (Exception ex)
@@ -149,9 +151,11 @@ namespace Nestor.BusinessLogic
 			{
 				using (var dbProvider = _getDbProvider())
 				{
+					var pokemon = dbProvider.PokemonsRepository.GetById(nest.PokemonId);
+
 					dbProvider.NestsRepository.Insert(nest);
 					dbProvider.Save();
-					Logger.LogMessage($"NEST ADDED: {nest.Id}\t{nest.PokemonId}");
+					Logger.LogMessage($"NEST ADDED: {nest.Id}\t{pokemon.Name}");
 				}
 			}
 			catch (Exception ex)
@@ -167,9 +171,11 @@ namespace Nestor.BusinessLogic
 			{
 				using (var dbProvider = _getDbProvider())
 				{
+					var pokemon = dbProvider.PokemonsRepository.GetById(nest.PokemonId);
+
 					dbProvider.NestsRepository.Update(nest);
 					dbProvider.Save();
-					Logger.LogMessage($"NEST UPDATED: {nest.Id}\t{nest.Pokemon.Name}");
+					Logger.LogMessage($"NEST UPDATED: {nest.Id}\t{pokemon.Name}");
 				}
 			}
 			catch (Exception ex)

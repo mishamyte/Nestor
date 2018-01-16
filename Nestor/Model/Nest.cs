@@ -6,6 +6,7 @@ namespace Nestor.Model
 {
 	public enum NestType
 	{
+		Default = 0,
 		Cluster = 1,
 		FrequentSpawnArea = 2,
 		FrequentSpawnPoint = 3,
@@ -29,6 +30,8 @@ namespace Nestor.Model
 
 		[JsonProperty("ln")]
 		public double Lng { get; set; }
+
+		public bool IsRecommended { get; set; }
 
 		public int LastMigration { get; set; }
 

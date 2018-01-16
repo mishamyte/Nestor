@@ -164,6 +164,8 @@ namespace Nestor.Tests
 					nestWasAdded = nest.Id == nestDto.Nest.Id;
 				});
 			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
+			dbMock.Setup(m => m.PokemonsRepository.GetById(It.IsAny<object>()))
+				.Returns(nestDto.Nest.Pokemon);
 
 			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
 
@@ -199,6 +201,8 @@ namespace Nestor.Tests
 					nestWasUpdated = nest.Id == nestDto.Nest.Id;
 				});
 			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
+			dbMock.Setup(m => m.PokemonsRepository.GetById(It.IsAny<object>()))
+				.Returns(nestDto.Nest.Pokemon);
 
 			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object);
 
@@ -222,7 +226,7 @@ namespace Nestor.Tests
 						Name = "Pikachu"
 					}
 				},
-				NestType = (NestType) 999
+				NestType = (NestType)999
 			};
 
 			var dbMock = new Mock<IDatabaseProvider>();
@@ -247,6 +251,8 @@ namespace Nestor.Tests
 				{
 					insertedDto = update;
 				});
+			dbMock.Setup(m => m.PokemonsRepository.GetById(It.IsAny<object>()))
+				.Returns(new Pokemon { Name = "Pikachu" });
 
 			var nest = new Nest
 			{

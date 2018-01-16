@@ -42,15 +42,15 @@ namespace Nestor.BusinessLogic
 				switch (_globalSettings.MessageType)
 				{
 					case MessageType.Image:
-					{
-						NotifyWithImage(nest, isUpdate);
-						break;
-					}
+						{
+							NotifyWithImage(nest, isUpdate);
+							break;
+						}
 					case MessageType.Location:
-					{
-						NotifyWithLocation(nest, isUpdate);
-						break;
-					}
+						{
+							NotifyWithLocation(nest, isUpdate);
+							break;
+						}
 					default:
 						throw new ArgumentOutOfRangeException($"Unknown message type {_globalSettings.MessageType}");
 				}
@@ -80,7 +80,7 @@ namespace Nestor.BusinessLogic
 			{
 				using (var dbProvider = _getDbProvider())
 				{
-
+					var dbNest = dbProvider.NestsRepository.GetById(nest.Id);
 					var nestInfo = dbProvider.NestsInfoRepository.GetById(nest.Id);
 					var sb = new StringBuilder();
 
@@ -90,8 +90,20 @@ namespace Nestor.BusinessLogic
 							? $"{nestInfo.Name} #{nestInfo.HashtagName}"
 							: $"{nestInfo.Name}");
 					}
-					sb.AppendLine(GetNestTypeName(nest.NestType));
-					sb.AppendLine($"#{nest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
+
+					if (nest.IsRecommended)
+					{
+						sb.AppendLine("🔥 RECOMMENDED NEST 🔥");
+					}
+
+					var nestTypeName = GetNestTypeName(dbNest.NestType);
+
+					if (!string.IsNullOrEmpty(nestTypeName))
+					{
+						sb.AppendLine(nestTypeName);
+					}
+
+					sb.AppendLine($"#{dbNest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
 
 					return sb.ToString();
 				}
