@@ -10,8 +10,17 @@ namespace Nestor.Service.Loggers
 
 		internal FileLogger()
 		{
-			_fileName = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location),
-				"Logs", $"{DateTime.Now:dd.MM.yyyy HH-mm-ss}.txt");
+			var logsDirectory = Path.Combine(
+				Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) ??
+				throw new InvalidOperationException(),
+				"Logs");
+
+			if (!LogsDirectoryExists(logsDirectory))
+			{
+				CreateLogsDirectory(logsDirectory);
+			}
+
+			_fileName = Path.Combine(logsDirectory, $"{DateTime.Now:dd.MM.yyyy HH-mm-ss}.txt");
 		}
 
 		public void LogDebug(string data)
@@ -27,6 +36,16 @@ namespace Nestor.Service.Loggers
 		public void LogMessage(string message)
 		{
 			WriteLine($"[{DateTime.Now:dd/MM/yyyy HH:mm:ss}] {message}");
+		}
+
+		private static void CreateLogsDirectory(string path)
+		{
+			Directory.CreateDirectory(path);
+		}
+
+		private static bool LogsDirectoryExists(string path)
+		{
+			return Directory.Exists(path);
 		}
 
 		private void WriteLine(string message)
