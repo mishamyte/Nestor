@@ -5,4 +5,4 @@ install:
   - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory TestRunner
 script:
   - msbuild /p:Configuration=Release Nestor.sln
-  - mono ./TestRunner/NUnit.Runners.3.8.0/tools/nunit3-console.exe ./Nestor.Tests/bin/Release/Nestor.Tests.dll
+  - mono ./TestRunner/NUnit.ConsoleRunner.3.8.0/tools/nunit3-console.exe ./Nestor.Tests/bin/Release/Nestor.Tests.dll
