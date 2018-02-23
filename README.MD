@@ -1,13 +1,13 @@
 # Nestor
-Nestor is a library for Telegram notifications of Pokemon Go nests changes. It parses data from the [SilphRoad](thesilphroad.com/atlas) and notifies you about nests changes in selected area.
+Nestor is a library for Telegram notifications of Pokemon Go nests changes. It parses data from the [SilphRoad](https://thesilphroad.com/atlas) and notifies you about nests changes in selected area.
 
 To use it you need to:
 1.	Apply all database scripts (from Nestor/SQL folder) and use EF provider for your database
 2.	Implement the ILogger and ISettings interfaces
 3.	Create the Nestor instance and go ahead.
 ```C#
-var settings = SomeISettingsImpl();
-var logger = SomeILoggerImpl();
+var settings = new SomeISettingsImpl();
+var logger = new SomeILoggerImpl();
 var nestor = new Nestor(settings, logger);
 ```
 More detailed example you can see in Nestor.Service project
