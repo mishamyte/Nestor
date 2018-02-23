@@ -4,5 +4,5 @@ install:
   - nuget restore Nestor.sln
   - nuget install NUnit.Runners -Version 3.8.0 -OutputDirectory TestRunner
 script:
-  - xbuild /p:Configuration=Release Nestor.sln
-  - mono ./TestRunner/NUnit.Runners.3.8.0/tools/nunit-console.exe ./Nestor.Tests/bin/Release/Nestor.Tests.dll
+  - msbuild /p:Configuration=Release Nestor.sln
+  - mono ./TestRunner/NUnit.Runners.3.8.0/tools/nunite-console.exe ./Nestor.Tests/bin/Release/Nestor.Tests.dll
