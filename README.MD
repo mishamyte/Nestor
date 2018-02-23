@@ -1,4 +1,4 @@
-# Nestor
+# Nestor [![Build Status](https://travis-ci.org/mishamyte/Nestor.svg?branch=master)](https://travis-ci.org/mishamyte/Nestor)
 Nestor is a library for Telegram notifications of Pokemon Go nests changes. It parses data from the [SilphRoad](https://thesilphroad.com/atlas) and notifies you about nests changes in selected area.
 
 To use it you need to:
