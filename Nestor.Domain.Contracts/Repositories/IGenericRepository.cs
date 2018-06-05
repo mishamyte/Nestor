@@ -4,9 +4,6 @@ using System.Linq.Expressions;
 
 namespace Nestor.Domain.Contracts
 {
-	/// <summary>
-	/// Define generic CRUD operations
-	/// </summary>
 	public interface IGenericRepository<TEntity> where TEntity: class 
     {
 	    void Delete(object id);

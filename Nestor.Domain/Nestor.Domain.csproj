@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B13346F2-8430-4A72-BB9B-7BBFAC4BCBA6}</ProjectGuid>
+    <ProjectGuid>{CDE2EA25-D12D-4612-87EF-708BB8599C8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nestor.Domain.Contracts</RootNamespace>
-    <AssemblyName>Nestor.Domain.Contracts</AssemblyName>
+    <RootNamespace>Nestor.Domain</RootNamespace>
+    <AssemblyName>Nestor.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,22 +30,37 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IDatabaseProvider.cs" />
-    <Compile Include="Repositories\IGenericRepository.cs" />
-    <Compile Include="Repositories\INestInfoRepository.cs" />
-    <Compile Include="Repositories\INestRepository.cs" />
-    <Compile Include="Repositories\INestUpdateRepository.cs" />
-    <Compile Include="Repositories\IPokemonRepository.cs" />
-    <Compile Include="Model\Enums\NestType.cs" />
-    <Compile Include="Model\Nest.cs" />
-    <Compile Include="Model\NestInfo.cs" />
-    <Compile Include="Model\NestUpdate.cs" />
-    <Compile Include="Model\Pokemon.cs" />
+    <Compile Include="DatabaseProvider.cs" />
+    <Compile Include="NestorDbConfiguration.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\NestInfoRepository.cs" />
+    <Compile Include="NestorContext.cs" />
+    <Compile Include="Repositories\NestRepository.cs" />
+    <Compile Include="Repositories\NestUpdateRepository.cs" />
+    <Compile Include="Repositories\PokemonRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Nestor.Contracts\Nestor.Contracts.csproj">
+      <Project>{7504846A-2629-4122-8799-245F0B61D216}</Project>
+      <Name>Nestor.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Nestor.Domain.Contracts\Nestor.Domain.Contracts.csproj">
+      <Project>{b13346f2-8430-4a72-bb9b-7bbfac4bcba6}</Project>
+      <Name>Nestor.Domain.Contracts</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
