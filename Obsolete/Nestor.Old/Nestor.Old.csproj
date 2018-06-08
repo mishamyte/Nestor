@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5D7E8C4C-C131-46A7-A7A8-1A764911EC95}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Nestor</RootNamespace>
+    <AssemblyName>Nestor.Old</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="Telegram.Bot">
+      <HintPath>..\..\packages\Telegram.Bot.14.5.0\lib\net45\Telegram.Bot.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLogic\INestsWatcher.cs" />
+    <Compile Include="BusinessLogic\INotifier.cs" />
+    <Compile Include="BusinessLogic\NestsWatcher.cs" />
+    <Compile Include="BusinessLogic\Notifier.cs" />
+    <Compile Include="DAL.Interfaces\INestUpdateRepository.cs" />
+    <Compile Include="DAL\NestsDbConfiguration.cs" />
+    <Compile Include="DAL\NestUpdateRepository.cs" />
+    <Compile Include="DTO\NestDto.cs" />
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Model\NestUpdate.cs" />
+    <Compile Include="Settings\ISettings.cs" />
+    <Compile Include="TelegramBot\IBotProvider.cs" />
+    <Compile Include="Settings\IBotSettings.cs" />
+    <Compile Include="Settings\IDbSettings.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="DAL\DatabaseProvider.cs" />
+    <Compile Include="DAL\NestInfoRepository.cs" />
+    <Compile Include="DAL\NestRepository.cs" />
+    <Compile Include="DAL\NestsContext.cs" />
+    <Compile Include="DAL\PokemonRepository.cs" />
+    <Compile Include="DAL.Interfaces\IDatabaseProvider.cs" />
+    <Compile Include="DAL.Interfaces\IGenericRepository.cs" />
+    <Compile Include="DAL.Interfaces\INestInfoRepository.cs" />
+    <Compile Include="Parser\INestProvider.cs" />
+    <Compile Include="DAL.Interfaces\INestRepository.cs" />
+    <Compile Include="Parser\IParser.cs" />
+    <Compile Include="DAL.Interfaces\IPokemonRepository.cs" />
+    <Compile Include="Settings\IGlobalSettings.cs" />
+    <Compile Include="Settings\IParserSettings.cs" />
+    <Compile Include="Model\Nest.cs" />
+    <Compile Include="Model\NestInfo.cs" />
+    <Compile Include="Model\Pokemon.cs" />
+    <Compile Include="Nestor.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\PayloadBuilder.cs" />
+    <Compile Include="Parser\TheSilphRoadProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TelegramBot\Bot.cs" />
+    <Compile Include="DAL\GenericRepository.cs" />
+    <Compile Include="Utils\GoogleMapsUrlBuilder.cs" />
+    <Compile Include="Utils\JsonDeserializer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

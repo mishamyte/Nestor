@@ -122,9 +122,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nestor\Nestor.csproj">
+    <ProjectReference Include="..\Nestor.Old\Nestor.Old.csproj">
       <Project>{5d7e8c4c-c131-46a7-a7a8-1a764911ec95}</Project>
-      <Name>Nestor</Name>
+      <Name>Nestor.Old</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

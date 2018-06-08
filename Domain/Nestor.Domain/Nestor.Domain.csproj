@@ -48,7 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Nestor.Contracts\Nestor.Contracts.csproj">
+    <ProjectReference Include="..\..\Nestor.Contracts\Nestor.Contracts.csproj">
       <Project>{7504846A-2629-4122-8799-245F0B61D216}</Project>
       <Name>Nestor.Contracts</Name>
     </ProjectReference>

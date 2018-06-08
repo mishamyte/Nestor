@@ -1,8 +1,8 @@
 ﻿using System.Globalization;
 using System.Text;
-using Nestor.Contracts.Settings;
+using Nestor.Settings;
 
-namespace Nestor
+namespace Nestor.Parser
 {
 	internal class PayloadBuilder
 	{

@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nestor.Contracts;
-using Nestor.Contracts.Dtos;
+using Nestor.Model;
 using Nestor.Utils;
 using Newtonsoft.Json.Linq;
 
-namespace Nestor
+namespace Nestor.Parser
 {
 	internal class Parser : IParser
 	{
@@ -17,7 +16,7 @@ namespace Nestor
 			_provider = provider;
 		}
 
-		public async Task<IList<SilphNestDto>> GetNests()
+		public async Task<IList<Nest>> GetNests()
 		{
 			var responseString = await _provider.GetNestsJsonData();
 
@@ -25,14 +24,14 @@ namespace Nestor
 
 			if (success && responseObject?["localMarkers"] != null)
 			{
-				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out Dictionary<string, SilphNestDto> result);
+				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out Dictionary<string, Nest> result);
 
 				if (success)
 				{
 					return result.Select(nest => nest.Value).ToList();
 				}
 			}
-			return default(List<SilphNestDto>);
+			return default(List<Nest>);
 		}
 
 		public void Dispose()

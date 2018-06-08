@@ -1,10 +1,9 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Nestor.Contracts;
-using Nestor.Contracts.Settings;
+using Nestor.Settings;
 
-namespace Nestor
+namespace Nestor.Parser
 {
 	internal class TheSilphRoadProvider : INestProvider
 	{

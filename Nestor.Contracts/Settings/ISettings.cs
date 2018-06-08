@@ -1,4 +1,4 @@
-﻿namespace Nestor.Contracts
+﻿namespace Nestor.Contracts.Settings
 {
 	public interface ISettings
 	{

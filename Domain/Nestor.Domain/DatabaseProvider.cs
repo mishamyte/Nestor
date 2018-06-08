@@ -1,4 +1,4 @@
-﻿using Nestor.Contracts;
+﻿using Nestor.Contracts.Settings;
 using Nestor.Domain.Contracts;
 
 namespace Nestor.Domain

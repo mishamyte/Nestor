@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 
-namespace Nestor.Contracts
+namespace Nestor.Contracts.Settings
 {
 	public interface IGlobalSettings
 	{
 		int MigrationNumber { get; set; }
 
-		[JsonConverter(typeof(StringEnumConverter))]
 		MessageType MessageType { get; set; }
 
 		string GoogleMapsKey { get; set; }

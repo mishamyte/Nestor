@@ -1,7 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Pluralization;
 using System.Data.Entity.Infrastructure.DependencyResolution;
-using Nestor.Contracts;
+using Nestor.Contracts.Settings;
 using Nestor.Domain.Contracts;
 
 namespace Nestor.Domain
