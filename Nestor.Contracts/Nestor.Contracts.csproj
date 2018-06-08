@@ -41,7 +41,9 @@
     <Compile Include="Dtos\Enums\NestType.cs" />
     <Compile Include="Dtos\NestDto.cs" />
     <Compile Include="Dtos\SilphNestDto.cs" />
+    <Compile Include="IBotProvider.cs" />
     <Compile Include="INestProvider.cs" />
+    <Compile Include="INotifier.cs" />
     <Compile Include="IParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\IBotSettings.cs" />

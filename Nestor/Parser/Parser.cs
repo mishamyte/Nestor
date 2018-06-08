@@ -25,7 +25,8 @@ namespace Nestor
 
 			if (success && responseObject?["localMarkers"] != null)
 			{
-				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(), out Dictionary<string, SilphNestDto> result);
+				success = JsonDeserializer.TryDeserializeObject(responseObject["localMarkers"].ToString(),
+					out Dictionary<string, SilphNestDto> result);
 
 				if (success)
 				{

@@ -45,14 +45,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Notifier.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\PayloadBuilder.cs" />
     <Compile Include="Parser\TheSilphRoadProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TelegramBot.cs" />
+    <Compile Include="Utils\GoogleMapsUrlBuilder.cs" />
     <Compile Include="Utils\JsonDeserializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Domain\Nestor.Domain.Contracts\Nestor.Domain.Contracts.csproj">
+      <Project>{b13346f2-8430-4a72-bb9b-7bbfac4bcba6}</Project>
+      <Name>Nestor.Domain.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Nestor.Contracts\Nestor.Contracts.csproj">
       <Project>{7504846A-2629-4122-8799-245F0B61D216}</Project>
       <Name>Nestor.Contracts</Name>
