@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Nestor.Domain.Contracts;
+using Nestor.Contracts.Dtos;
 using Nestor.Utils;
 using NUnit.Framework;
 
@@ -13,15 +13,11 @@ namespace Nestor.Tests
 		[Test]
 		public void GMapsBuilderShouldBuildString()
 		{
-			var nest = new Nest
+			var nest = new SilphNestDto
 			{
 				Id = 1,
 				Lat = 50.5,
 				Lng = 30.4,
-				Pokemon = new Pokemon
-				{
-					Id = 25
-				},
 				PokemonId = 25
 			};
 			var iconsUrlFormat = "http://alakazam/pokeicons/{0}.png";
@@ -46,15 +42,11 @@ namespace Nestor.Tests
 		[Test]
 		public void GMapsBuilderShouldFormatId()
 		{
-			var nest = new Nest
+			var nest = new SilphNestDto
 			{
 				Id = 1,
 				Lat = 50.5,
 				Lng = 30.4,
-				Pokemon = new Pokemon
-				{
-					Id = 1
-				},
 				PokemonId = 1
 			};
 			var iconsUrlFormat = "http://alakazam/pokeicons/{0:D3}.png";

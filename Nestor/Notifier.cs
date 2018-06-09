@@ -2,10 +2,12 @@
 using System.Globalization;
 using System.Text;
 using Nestor.Contracts;
+using Nestor.Contracts.Dtos;
 using Nestor.Contracts.Settings;
 using Nestor.Domain.Contracts;
 using Nestor.Utils;
 using Serilog;
+using NestType = Nestor.Domain.Contracts.NestType;
 
 namespace Nestor
 {
@@ -24,7 +26,7 @@ namespace Nestor
 			_logger = logger;
 		}
 
-		public void Notify(Nest nest, bool isUpdate = false)
+		public void Notify(SilphNestDto nest, bool isUpdate = false)
 		{
 			if (!IsIgnored(nest))
 			{
@@ -63,7 +65,7 @@ namespace Nestor
 			}
 		}
 
-		private string GetDescriptionMessage(Nest nest)
+		private string GetDescriptionMessage(SilphNestDto nest)
 		{
 			try
 			{
@@ -80,7 +82,7 @@ namespace Nestor
 							: $"{nestInfo.Name}");
 					}
 
-					if (nest.IsRecommended)
+					if (dbNest.IsRecommended)
 					{
 						sb.AppendLine("🔥 RECOMMENDED NEST 🔥");
 					}
@@ -104,7 +106,7 @@ namespace Nestor
 			}
 		}
 
-		private bool IsIgnored(Nest nest)
+		private bool IsIgnored(SilphNestDto nest)
 		{
 			if (_globalSettings.IgnoredPokemons.Contains(nest.PokemonId))
 			{
@@ -123,7 +125,7 @@ namespace Nestor
 			return false;
 		}
 
-		private void NotifyWithImage(Nest nest, bool isUpdate)
+		private void NotifyWithImage(SilphNestDto nest, bool isUpdate)
 		{
 			var descriptionString = isUpdate
 				? $"NEST INFO UPDATED:{Environment.NewLine}" + GetDescriptionMessage(nest) +
@@ -136,7 +138,7 @@ namespace Nestor
 				descriptionString);
 		}
 
-		private void NotifyWithLocation(Nest nest, bool isUpdate)
+		private void NotifyWithLocation(SilphNestDto nest, bool isUpdate)
 		{
 			var descriptionString = isUpdate
 				? $"NEST INFO UPDATED:{Environment.NewLine}" + GetDescriptionMessage(nest)

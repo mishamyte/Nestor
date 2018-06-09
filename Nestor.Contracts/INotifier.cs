@@ -1,9 +1,9 @@
-﻿using Nestor.Domain.Contracts;
+﻿using Nestor.Contracts.Dtos;
 
 namespace Nestor.Contracts
 {
 	public interface INotifier
 	{
-		void Notify(Nest nest, bool isUpdate = false);
+		void Notify(SilphNestDto nest, bool isUpdate = false);
 	}
 }

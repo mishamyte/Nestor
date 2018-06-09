@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using Moq;
 using Nestor.Contracts;
+using Nestor.Contracts.Dtos;
 using Nestor.Contracts.Settings;
 using Nestor.Domain.Contracts;
 using NUnit.Framework;
 using Serilog;
+using NestType = Nestor.Domain.Contracts.NestType;
 
 namespace Nestor.Tests
 {
@@ -16,6 +18,8 @@ namespace Nestor.Tests
 		public void NotifierShouldProcessMessageTypeImage()
 		{
 			var imageWasSent = false;
+
+			var silphNest = GetTestSilphNestDto();
 
 			var nest = new Nest
 			{
@@ -42,7 +46,7 @@ namespace Nestor.Tests
 				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
-			notifier.Notify(nest);
+			notifier.Notify(silphNest);
 
 			Assert.IsTrue(imageWasSent);
 		}
@@ -51,6 +55,8 @@ namespace Nestor.Tests
 		public void NotifierShouldProcessMessageTypeLocation()
 		{
 			var locationWasSent = false;
+
+			var silphNest = GetTestSilphNestDto();
 
 			var nest = new Nest
 			{
@@ -79,7 +85,7 @@ namespace Nestor.Tests
 				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
-			notifier.Notify(nest);
+			notifier.Notify(silphNest);
 
 			Assert.IsTrue(locationWasSent);
 		}
@@ -88,6 +94,16 @@ namespace Nestor.Tests
 		public void NotifierShouldThrowExceptionOnUnknownMessageType()
 		{
 			const int unknownMessageType = 999;
+
+			var silphNest = GetTestSilphNestDto();
+
+			var nest = new Nest
+			{
+				Pokemon = new Pokemon
+				{
+					Name = "Pikachu"
+				}
+			};
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.MessageType)
@@ -99,17 +115,9 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsInfoRepository.GetById(It.IsAny<object>()))
 				.Returns(default(NestInfo));
 
-			var nest = new Nest
-			{
-				Pokemon = new Pokemon
-				{
-					Name = "Pikachu"
-				}
-			};
-
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
 
-			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => notifier.Notify(nest));
+			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => notifier.Notify(silphNest));
 			Assert.AreEqual($"Unknown message type {unknownMessageType}", exception.ParamName);
 		}
 
@@ -117,6 +125,8 @@ namespace Nestor.Tests
 		public void NotifierShouldProcessNestInsert()
 		{
 			var captionString = string.Empty;
+
+			var silphNest = GetTestSilphNestDto();
 
 			var nest = new Nest
 			{
@@ -152,7 +162,7 @@ namespace Nestor.Tests
 				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
-			notifier.Notify(nest);
+			notifier.Notify(silphNest);
 
 			Console.WriteLine(captionString);
 
@@ -165,6 +175,8 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
+			var silphNest = GetTestSilphNestDto();
+
 			var nest = new Nest
 			{
 				Lat = 50.42,
@@ -199,7 +211,7 @@ namespace Nestor.Tests
 				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
-			notifier.Notify(nest, true);
+			notifier.Notify(silphNest, true);
 
 			Console.WriteLine(captionString);
 
@@ -211,6 +223,8 @@ namespace Nestor.Tests
 		public void NotifierShouldSkipIgnoredPokemons()
 		{
 			var triggeredCounter = 0;
+
+			var silphNest = GetTestSilphNestDto(16);
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.IgnoredPokemons)
@@ -226,13 +240,8 @@ namespace Nestor.Tests
 			var loggerMock = new Mock<ILogger>();
 			loggerMock.Setup(m => m.Information(It.IsAny<string>())).Verifiable();
 
-			var nest = new Nest
-			{
-				PokemonId = 16
-			};
-
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, loggerMock.Object);
-			notifier.Notify(nest);
+			notifier.Notify(silphNest);
 
 			Assert.AreEqual(0, triggeredCounter);
 		}
@@ -241,6 +250,9 @@ namespace Nestor.Tests
 		public void NotifierShouldSkipIgnoredNests()
 		{
 			var triggeredCounter = 0;
+
+			var silphNest = GetTestSilphNestDto(16);
+			silphNest.Id = 42;
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.IgnoredNests)
@@ -256,14 +268,8 @@ namespace Nestor.Tests
 			var loggerMock = new Mock<ILogger>();
 			loggerMock.Setup(m => m.Information(It.IsAny<string>())).Verifiable();
 
-			var nest = new Nest
-			{
-				Id = 42,
-				PokemonId = 16
-			};
-
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, loggerMock.Object);
-			notifier.Notify(nest);
+			notifier.Notify(silphNest);
 
 			Assert.AreEqual(0, triggeredCounter);
 		}
@@ -281,6 +287,16 @@ namespace Nestor.Tests
 				.Returns(new List<int>());
 
 			return mock;
+		}
+
+		private static SilphNestDto GetTestSilphNestDto(int pokemonId = 25)
+		{
+			var silphNest = new SilphNestDto
+			{
+				PokemonId = pokemonId
+			};
+
+			return silphNest;
 		}
 	}
 }
