@@ -45,7 +45,7 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
 				.Returns(nest);
 
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
 			notifier.Notify(silphNest);
 
 			Assert.IsTrue(imageWasSent);
@@ -84,7 +84,7 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
 				.Returns(nest);
 
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
 			notifier.Notify(silphNest);
 
 			Assert.IsTrue(locationWasSent);
@@ -115,7 +115,7 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsInfoRepository.GetById(It.IsAny<object>()))
 				.Returns(default(NestInfo));
 
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
 
 			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => notifier.Notify(silphNest));
 			Assert.AreEqual($"Unknown message type {unknownMessageType}", exception.ParamName);
@@ -161,10 +161,10 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
 				.Returns(nest);
 
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
 			notifier.Notify(silphNest);
 
-			Console.WriteLine(captionString);
+			Log.Information(captionString);
 
 			Assert.IsTrue(!string.IsNullOrEmpty(captionString));
 			Assert.IsFalse(captionString.Contains("NEST INFO UPDATED"));
@@ -210,10 +210,10 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.NestsRepository.GetById(It.IsAny<object>()))
 				.Returns(nest);
 
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, null);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
 			notifier.Notify(silphNest, true);
 
-			Console.WriteLine(captionString);
+			Log.Information(captionString);
 
 			Assert.IsTrue(!string.IsNullOrEmpty(captionString));
 			Assert.IsTrue(captionString.Contains("NEST INFO UPDATED"));
@@ -237,10 +237,7 @@ namespace Nestor.Tests
 					triggeredCounter++;
 				});
 
-			var loggerMock = new Mock<ILogger>();
-			loggerMock.Setup(m => m.Information(It.IsAny<string>())).Verifiable();
-
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, loggerMock.Object);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, Log.Logger);
 			notifier.Notify(silphNest);
 
 			Assert.AreEqual(0, triggeredCounter);
@@ -265,10 +262,7 @@ namespace Nestor.Tests
 					triggeredCounter++;
 				});
 
-			var loggerMock = new Mock<ILogger>();
-			loggerMock.Setup(m => m.Information(It.IsAny<string>())).Verifiable();
-
-			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, loggerMock.Object);
+			var notifier = new Notifier(settingsMock.Object, botMock.Object, null, Log.Logger);
 			notifier.Notify(silphNest);
 
 			Assert.AreEqual(0, triggeredCounter);

@@ -1,7 +1,7 @@
-﻿using System;
-using Moq;
+﻿using Moq;
 using Nestor.Contracts;
 using NUnit.Framework;
+using Serilog;
 
 namespace Nestor.Tests
 {
@@ -23,7 +23,7 @@ namespace Nestor.Tests
 			var result = task.Result;
 			foreach (var nest in result)
 			{
-				Console.WriteLine($"Id: {nest.Id}\t Pokemon: {nest.PokemonId}");
+				Log.Information($"Id: {nest.Id}\t Pokemon: {nest.PokemonId}");
 			}
 
 			Assert.AreEqual(36, result.Count);
