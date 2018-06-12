@@ -7,6 +7,6 @@ namespace Nestor.Contracts
 {
 	public interface IParser : IDisposable
 	{
-		Task<IList<SilphNestDto>> GetNests();
+		Task<List<SilphNestDto>> GetNests();
 	}
 }

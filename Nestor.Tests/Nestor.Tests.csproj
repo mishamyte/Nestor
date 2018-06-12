@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GoogleMapsUrlBuilderTests.cs" />
+    <Compile Include="NestWatcherTests.cs" />
     <Compile Include="NotifierTests.cs" />
     <Compile Include="ParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

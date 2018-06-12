@@ -17,7 +17,7 @@ namespace Nestor
 			_provider = provider;
 		}
 
-		public async Task<IList<SilphNestDto>> GetNests()
+		public async Task<List<SilphNestDto>> GetNests()
 		{
 			var responseString = await _provider.GetNestsJsonData();
 
