@@ -182,7 +182,16 @@
     </None>
     <Content Include="Config\logger.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TransformOnBuild>true</TransformOnBuild>
     </Content>
+    <None Include="Config\logger.Debug.json">
+      <DependentUpon>logger.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
+    <None Include="Config\logger.Release.json">
+      <DependentUpon>logger.json</DependentUpon>
+      <IsTransformFile>True</IsTransformFile>
+    </None>
     <None Include="Config\parser.Debug.json">
       <DependentUpon>parser.json</DependentUpon>
       <IsTransformFile>True</IsTransformFile>
