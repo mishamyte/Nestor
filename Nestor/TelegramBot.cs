@@ -14,7 +14,7 @@ namespace Nestor
 		private readonly IBotSettings _settings;
 		private readonly ILogger _logger;
 
-		internal TelegramBot(IBotSettings settings, ILogger logger)
+		public TelegramBot(IBotSettings settings, ILogger logger)
 		{
 			_settings = settings;
 			_logger = logger;

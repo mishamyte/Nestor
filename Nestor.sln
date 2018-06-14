@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor", "Nestor\Nestor.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "Nestor.Tests\Nestor.Tests.csproj", "{15FD2D06-71D8-46FC-8F2A-F2556EB306A3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{AF71A1DD-B87C-426F-8036-BD2E8E4232A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Service", "Hosts\Nestor.Service\Nestor.Service.csproj", "{9FE2EE91-01BD-4751-B5EB-17BF04813E91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,10 @@ Global
 		{15FD2D06-71D8-46FC-8F2A-F2556EB306A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15FD2D06-71D8-46FC-8F2A-F2556EB306A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15FD2D06-71D8-46FC-8F2A-F2556EB306A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE2EE91-01BD-4751-B5EB-17BF04813E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE2EE91-01BD-4751-B5EB-17BF04813E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE2EE91-01BD-4751-B5EB-17BF04813E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE2EE91-01BD-4751-B5EB-17BF04813E91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -71,6 +79,7 @@ Global
 		{6E4914D5-A442-4248-8A44-5A6845310D9B} = {C1752B28-22AF-43B8-8C3E-389B8F79A29E}
 		{B13346F2-8430-4A72-BB9B-7BBFAC4BCBA6} = {6E60C2A8-3368-4191-8FF4-C092EF5064AE}
 		{CDE2EA25-D12D-4612-87EF-708BB8599C8C} = {6E60C2A8-3368-4191-8FF4-C092EF5064AE}
+		{9FE2EE91-01BD-4751-B5EB-17BF04813E91} = {AF71A1DD-B87C-426F-8036-BD2E8E4232A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5F4C61E1-3C6A-4D21-AF01-5354D5915CEA}

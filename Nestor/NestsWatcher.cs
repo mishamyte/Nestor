@@ -19,7 +19,7 @@ namespace Nestor
 		private readonly ILogger _logger;
 		private readonly IParser _parser;
 
-		internal NestsWatcher(IGlobalSettings globalSettings, IParser parser, Func<IDatabaseProvider> getDbProvider, ILogger logger)
+		public NestsWatcher(IGlobalSettings globalSettings, IParser parser, Func<IDatabaseProvider> getDbProvider, ILogger logger)
 		{
 			_parser = parser;
 			_globalSettings = globalSettings;
@@ -38,13 +38,13 @@ namespace Nestor
 			{
 				using (var dbProvider = _getDbProvider())
 				{
-					// var dbNests = dbProvider.NestsRepository.Get().ToList(); ! ???
 					var silphNests = await _parser.GetNests();				
 					var resultingNests = new List<NestDto>();
 
 					if (silphNests != null)
 					{
-						var dbNests = dbProvider.NestsRepository.Get(nest => silphNests.Any(silph => silph.Id == nest.Id)).ToArray();
+						var silphNestsIds = silphNests.Select(nest => nest.Id);
+						var dbNests = dbProvider.NestsRepository.Get(nest => silphNestsIds.Any(silph => silph == nest.Id)).ToArray();
 
 						foreach (var dbNest in dbNests)
 						{
