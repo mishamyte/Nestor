@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Nestor.Contracts\Nestor.Contracts.csproj">
-      <Project>{7504846A-2629-4122-8799-245F0B61D216}</Project>
+      <Project>{7504846a-2629-4122-8799-245f0b61d216}</Project>
       <Name>Nestor.Contracts</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nestor.Domain.Contracts\Nestor.Domain.Contracts.csproj">

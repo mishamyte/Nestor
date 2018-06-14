@@ -11,7 +11,7 @@ namespace Nestor.Domain
 		private INestUpdateRepository _nestsUpdatesRepository;
 		private IPokemonRepository _pokemonsRepository;
 
-		internal DatabaseProvider(IDbSettings dbSettings)
+		public DatabaseProvider(IDbSettings dbSettings)
 		{
 			_context = new NestorContext(dbSettings);
 		}

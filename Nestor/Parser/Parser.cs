@@ -12,7 +12,7 @@ namespace Nestor
 	{
 		private readonly INestProvider _provider;
 
-		internal Parser(INestProvider provider)
+		public Parser(INestProvider provider)
 		{
 			_provider = provider;
 		}

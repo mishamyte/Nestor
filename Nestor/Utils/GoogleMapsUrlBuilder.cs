@@ -1,12 +1,12 @@
 ﻿using System.Globalization;
 using System.Text;
-using Nestor.Contracts.Dtos;
+using Nestor.Domain.Contracts;
 
 namespace Nestor.Utils
 {
 	internal static class GoogleMapsUrlBuilder
 	{
-		internal static string GetUrlString(SilphNestDto nest, string gmapsKey, string iconsUrlFormat)
+		internal static string GetUrlString(Nest nest, string gmapsKey, string iconsUrlFormat)
 		{
 			var sb = new StringBuilder();
 

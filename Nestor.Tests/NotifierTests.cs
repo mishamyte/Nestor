@@ -19,7 +19,7 @@ namespace Nestor.Tests
 		{
 			var imageWasSent = false;
 
-			var silphNest = GetTestSilphNestDto();
+			var silphNest = GetTestNestDto();
 
 			var nest = new Nest
 			{
@@ -56,7 +56,7 @@ namespace Nestor.Tests
 		{
 			var locationWasSent = false;
 
-			var silphNest = GetTestSilphNestDto();
+			var silphNest = GetTestNestDto();
 
 			var nest = new Nest
 			{
@@ -95,7 +95,7 @@ namespace Nestor.Tests
 		{
 			const int unknownMessageType = 999;
 
-			var silphNest = GetTestSilphNestDto();
+			var silphNest = GetTestNestDto();
 
 			var nest = new Nest
 			{
@@ -126,7 +126,8 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
-			var silphNest = GetTestSilphNestDto();
+			var silphNest = GetTestNestDto();
+			silphNest.NestType = Contracts.Dtos.NestType.Missed;
 
 			var nest = new Nest
 			{
@@ -175,7 +176,8 @@ namespace Nestor.Tests
 		{
 			var captionString = string.Empty;
 
-			var silphNest = GetTestSilphNestDto();
+			var silphNest = GetTestNestDto();
+			silphNest.NestType = Contracts.Dtos.NestType.Outdated;
 
 			var nest = new Nest
 			{
@@ -211,7 +213,7 @@ namespace Nestor.Tests
 				.Returns(nest);
 
 			var notifier = new Notifier(settingsMock.Object, botMock.Object, () => dbMock.Object, Log.Logger);
-			notifier.Notify(silphNest, true);
+			notifier.Notify(silphNest);
 
 			Log.Information(captionString);
 
@@ -224,7 +226,7 @@ namespace Nestor.Tests
 		{
 			var triggeredCounter = 0;
 
-			var silphNest = GetTestSilphNestDto(16);
+			var silphNest = GetTestNestDto(16);
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.IgnoredPokemons)
@@ -248,8 +250,8 @@ namespace Nestor.Tests
 		{
 			var triggeredCounter = 0;
 
-			var silphNest = GetTestSilphNestDto(16);
-			silphNest.Id = 42;
+			var silphNest = GetTestNestDto(16);
+			silphNest.Nest.Id = 42;
 
 			var settingsMock = CreateGlobalSettingsMock();
 			settingsMock.Setup(m => m.IgnoredNests)
@@ -283,11 +285,14 @@ namespace Nestor.Tests
 			return mock;
 		}
 
-		private static SilphNestDto GetTestSilphNestDto(int pokemonId = 25)
+		private static NestDto GetTestNestDto(int pokemonId = 25)
 		{
-			var silphNest = new SilphNestDto
+			var silphNest = new NestDto
 			{
-				PokemonId = pokemonId
+				Nest = new Nest
+				{
+					PokemonId = pokemonId
+				}
 			};
 
 			return silphNest;

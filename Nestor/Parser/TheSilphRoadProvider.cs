@@ -12,7 +12,7 @@ namespace Nestor
 		private static readonly HttpClient Client = new HttpClient();
 		private readonly IParserSettings _settings;
 
-		internal TheSilphRoadProvider(IParserSettings settings)
+		public TheSilphRoadProvider(IParserSettings settings)
 		{
 			_settings = settings;
 		}

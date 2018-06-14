@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Nestor.Contracts.Dtos;
+using Nestor.Domain.Contracts;
 using Nestor.Utils;
 using NUnit.Framework;
 
@@ -13,7 +13,7 @@ namespace Nestor.Tests
 		[Test]
 		public void GMapsBuilderShouldBuildString()
 		{
-			var nest = new SilphNestDto
+			var nest = new Nest
 			{
 				Id = 1,
 				Lat = 50.5,
@@ -42,7 +42,7 @@ namespace Nestor.Tests
 		[Test]
 		public void GMapsBuilderShouldFormatId()
 		{
-			var nest = new SilphNestDto
+			var nest = new Nest
 			{
 				Id = 1,
 				Lat = 50.5,

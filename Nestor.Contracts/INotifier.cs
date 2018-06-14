@@ -4,6 +4,6 @@ namespace Nestor.Contracts
 {
 	public interface INotifier
 	{
-		void Notify(SilphNestDto nest, bool isUpdate = false);
+		void Notify(NestDto nest);
 	}
 }

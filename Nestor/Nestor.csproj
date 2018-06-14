@@ -33,6 +33,12 @@
     <Reference Include="AutoMapper, Version=7.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.7.0.0\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.2.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.Windsor, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Windsor.4.1.0\lib\net45\Castle.Windsor.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -41,7 +47,9 @@
       <HintPath>..\packages\Serilog.2.7.1\lib\net46\Serilog.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
     <Reference Include="Telegram.Bot, Version=14.5.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -66,6 +74,10 @@
     <ProjectReference Include="..\Domain\Nestor.Domain.Contracts\Nestor.Domain.Contracts.csproj">
       <Project>{b13346f2-8430-4a72-bb9b-7bbfac4bcba6}</Project>
       <Name>Nestor.Domain.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Domain\Nestor.Domain\Nestor.Domain.csproj">
+      <Project>{cde2ea25-d12d-4612-87ef-708bb8599c8c}</Project>
+      <Name>Nestor.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Nestor.Contracts\Nestor.Contracts.csproj">
       <Project>{7504846A-2629-4122-8799-245F0B61D216}</Project>
