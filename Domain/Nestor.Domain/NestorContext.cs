@@ -21,6 +21,10 @@ namespace Nestor.Domain
 			_dbSettings = dbSettings;
 		}
 
+		public NestorContext() : base("name=Nestor")
+		{
+		}
+
 		public DbSet<Nest> Nests { get; set; }
 
 		public DbSet<NestInfo> NestsInfo { get; set; }
@@ -34,9 +38,9 @@ namespace Nestor.Domain
 			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.HasDefaultSchema(
-				string.IsNullOrWhiteSpace(_dbSettings.Schema) ? DefaultSchema : _dbSettings.Schema);
+				string.IsNullOrWhiteSpace(_dbSettings?.Schema) ? DefaultSchema : _dbSettings?.Schema);
 
-			if (_dbSettings.LowerFirstLetter)
+			if (_dbSettings != null && _dbSettings.LowerFirstLetter)
 			{
 				modelBuilder.Properties().Configure(c => c.HasColumnName(ToLower(c.ClrPropertyInfo.Name, false)));
 				modelBuilder.Types().Configure(t => t.ToTable(ToLower(t.ClrType.Name, true)));
