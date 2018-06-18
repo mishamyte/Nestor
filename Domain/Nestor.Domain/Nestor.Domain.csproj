@@ -58,6 +58,18 @@
     <Compile Include="Migrations\201806142132305_InitialCreate.Designer.cs">
       <DependentUpon>201806142132305_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806181927120_Update1_NestsUpdatesIdSequence.cs" />
+    <Compile Include="Migrations\201806181927120_Update1_NestsUpdatesIdSequence.Designer.cs">
+      <DependentUpon>201806181927120_Update1_NestsUpdatesIdSequence.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806181954434_Update2_SeedPokemonsData.cs" />
+    <Compile Include="Migrations\201806181954434_Update2_SeedPokemonsData.Designer.cs">
+      <DependentUpon>201806181954434_Update2_SeedPokemonsData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201806182004301_Update3_vNestsWithoutInfo.cs" />
+    <Compile Include="Migrations\201806182004301_Update3_vNestsWithoutInfo.Designer.cs">
+      <DependentUpon>201806182004301_Update3_vNestsWithoutInfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="NestorDbConfiguration.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -86,10 +98,20 @@
     <EmbeddedResource Include="Migrations\201806142132305_InitialCreate.resx">
       <DependentUpon>201806142132305_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806181927120_Update1_NestsUpdatesIdSequence.resx">
+      <DependentUpon>201806181927120_Update1_NestsUpdatesIdSequence.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806181954434_Update2_SeedPokemonsData.resx">
+      <DependentUpon>201806181954434_Update2_SeedPokemonsData.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806182004301_Update3_vNestsWithoutInfo.resx">
+      <DependentUpon>201806182004301_Update3_vNestsWithoutInfo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Migrations\SQL\201806142132305_InitialCreate.sql" />
-    <Content Include="Migrations\SQL\Seed_Pokemons_Data.sql" />
+    <Content Include="Migrations\SQL\Update2_SeedPokemonsData.sql" />
+    <Content Include="Migrations\SQL\Update1_NestsUpdatesIdSequence.sql" />
+    <Content Include="Migrations\SQL\Update3_vNestsWithoutInfo.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
