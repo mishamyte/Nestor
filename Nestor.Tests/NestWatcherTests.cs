@@ -6,7 +6,6 @@ using Castle.Core.Internal;
 using Moq;
 using Nestor.Contracts;
 using Nestor.Contracts.Dtos;
-using Nestor.Contracts.Settings;
 using Nestor.Domain.Contracts;
 using NUnit.Framework;
 using Serilog;
@@ -19,7 +18,7 @@ namespace Nestor.Tests
 	{
 		private const int MigrationNumber = 42;
 
-		[SetUp]
+		[OneTimeSetUp]
 		public void SetUp()
 		{
 			AutoMapperConfiguration.Configure();
@@ -31,11 +30,11 @@ namespace Nestor.Tests
 			var parserNests = GetParserNests();
 			var dbNests = GetDbNests();
 
-			var settingsMock = GetGlobalSettingsMock();
-
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
 				.ReturnsAsync(parserNests);
+			parserMock.Setup(m => m.GetMigrationNumber())
+				.ReturnsAsync(MigrationNumber);
 
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsRepository.Get(It.IsAny<Expression<Func<Nest, bool>>>()))
@@ -48,7 +47,7 @@ namespace Nestor.Tests
 					Name = "Pikachu"
 				});
 
-			var watcher = new NestsWatcher(settingsMock.Object, parserMock.Object, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(parserMock.Object, () => dbMock.Object, Log.Logger);
 
 			var task = watcher.GetMissingAndOutdatedNests();
 			task.Wait();
@@ -60,18 +59,18 @@ namespace Nestor.Tests
 			Assert.AreEqual(2, resultingNests.Count);
 			Assert.AreEqual(2, resultingNests.Count(x => x.NestType == NestType.Missed));
 		}
-	
+
 		[Test]
 		public void WatcherShouldUpdateOutdatedNests()
 		{
 			var parserNests = GetParserNests();
 			var dbNests = GetPartiallyOutdatedDbNests(parserNests);
 
-			var settingsMock = GetGlobalSettingsMock();
-
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
 				.ReturnsAsync(parserNests);
+			parserMock.Setup(m => m.GetMigrationNumber())
+				.ReturnsAsync(MigrationNumber);
 
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsRepository.Get(It.IsAny<Expression<Func<Nest, bool>>>()))
@@ -83,7 +82,7 @@ namespace Nestor.Tests
 					Name = "Pikachu"
 				});
 
-			var watcher = new NestsWatcher(settingsMock.Object, parserMock.Object, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(parserMock.Object, () => dbMock.Object, Log.Logger);
 
 			var task = watcher.GetMissingAndOutdatedNests();
 			task.Wait();
@@ -109,11 +108,9 @@ namespace Nestor.Tests
 					logString += s;
 				});
 
-			var settingsMock = GetGlobalSettingsMock();
-
 			var parserMock = new Mock<IParser>();
 			parserMock.Setup(m => m.GetNests())
-				.ReturnsAsync((List<SilphNestDto>) null);
+				.ReturnsAsync((List<SilphNestDto>)null);
 
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsRepository.Get(null))
@@ -125,7 +122,7 @@ namespace Nestor.Tests
 					Name = "Pikachu"
 				});
 
-			var watcher = new NestsWatcher(settingsMock.Object, parserMock.Object, () => dbMock.Object, loggerMock.Object);
+			var watcher = new NestsWatcher(parserMock.Object, () => dbMock.Object, loggerMock.Object);
 
 			var task = watcher.GetMissingAndOutdatedNests();
 			task.Wait();
@@ -140,8 +137,6 @@ namespace Nestor.Tests
 		public void WatcherShouldProcessNestTypeMissed()
 		{
 			var nestWasAdded = false;
-
-			var settingsMock = GetGlobalSettingsMock();
 
 			var nestDto = new NestDto
 			{
@@ -166,7 +161,7 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.PokemonsRepository.GetById(It.IsAny<object>()))
 				.Returns(nestDto.Nest.Pokemon);
 
-			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(null, () => dbMock.Object, Log.Logger);
 
 			watcher.ProcessNest(nestDto);
 
@@ -177,8 +172,6 @@ namespace Nestor.Tests
 		public void WatcherShouldProcessNestTypeOutdated()
 		{
 			var nestWasUpdated = false;
-
-			var settingsMock = GetGlobalSettingsMock();
 
 			var nestDto = new NestDto
 			{
@@ -203,7 +196,7 @@ namespace Nestor.Tests
 			dbMock.Setup(m => m.PokemonsRepository.GetById(It.IsAny<object>()))
 				.Returns(nestDto.Nest.Pokemon);
 
-			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(null, () => dbMock.Object, Log.Logger);
 
 			watcher.ProcessNest(nestDto);
 
@@ -213,8 +206,6 @@ namespace Nestor.Tests
 		[Test]
 		public void WatcherShouldThrowExceptionOnUnknownNestType()
 		{
-			var settingsMock = GetGlobalSettingsMock();
-
 			var nestDto = new NestDto
 			{
 				Nest = new Nest
@@ -231,7 +222,7 @@ namespace Nestor.Tests
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()));
 
-			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(null, () => dbMock.Object, Log.Logger);
 
 			var exception = Assert.Throws<ArgumentOutOfRangeException>(() => watcher.ProcessNest(nestDto));
 			Assert.AreEqual($"Unexpected nest type {nestDto.NestType}", exception.ParamName);
@@ -241,8 +232,6 @@ namespace Nestor.Tests
 		public void WatcherShouldRecordHistoryCorrectly()
 		{
 			NestUpdate insertedDto = null;
-
-			var settingsMock = GetGlobalSettingsMock();
 
 			var dbMock = new Mock<IDatabaseProvider>();
 			dbMock.Setup(m => m.NestsUpdatesRepository.Insert(It.IsAny<NestUpdate>()))
@@ -256,13 +245,14 @@ namespace Nestor.Tests
 			var nestDto = new NestDto
 			{
 				Nest = new Nest
-				{ 
-				Id = 42,
-				PokemonId = 25
+				{
+					Id = 42,
+					PokemonId = 25,
+					LastMigration = 42
 				}
 			};
 
-			var watcher = new NestsWatcher(settingsMock.Object, null, () => dbMock.Object, Log.Logger);
+			var watcher = new NestsWatcher(null, () => dbMock.Object, Log.Logger);
 			watcher.RecordNestUpdateToHistory(nestDto);
 
 			Assert.IsNotNull(insertedDto);
@@ -288,10 +278,10 @@ namespace Nestor.Tests
 		private static List<Nest> GetPartiallyOutdatedDbNests(IEnumerable<SilphNestDto> silphNests)
 		{
 			return silphNests.Select(silphNest => new Nest
-				{
-					Id = silphNest.Id,
-					LastMigration = silphNest.Id > 1 ? MigrationNumber -1 : MigrationNumber
-				})
+			{
+				Id = silphNest.Id,
+				LastMigration = silphNest.Id > 1 ? MigrationNumber - 1 : MigrationNumber
+			})
 				.ToList();
 		}
 
@@ -314,15 +304,6 @@ namespace Nestor.Tests
 			};
 
 			return parserNests;
-		}
-
-		private static Mock<IGlobalSettings> GetGlobalSettingsMock()
-		{
-			var mock = new Mock<IGlobalSettings>();
-			mock.Setup(m => m.MigrationNumber)
-				.Returns(MigrationNumber);
-
-			return mock;
 		}
 
 		private static void PrintNests(IEnumerable<NestDto> nests)

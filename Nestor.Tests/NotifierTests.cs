@@ -141,8 +141,6 @@ namespace Nestor.Tests
 			};
 
 			var settingsMock = CreateGlobalSettingsMock();
-			settingsMock.Setup(m => m.MigrationNumber)
-				.Returns(42);
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<string>(), It.IsAny<string>()))
@@ -191,8 +189,6 @@ namespace Nestor.Tests
 			};
 
 			var settingsMock = CreateGlobalSettingsMock();
-			settingsMock.Setup(m => m.MigrationNumber)
-				.Returns(42);
 
 			var botMock = new Mock<IBotProvider>();
 			botMock.Setup(m => m.SendImage(It.IsAny<string>(), It.IsAny<string>()))

@@ -4,8 +4,6 @@ namespace Nestor.Contracts.Settings
 {
 	public interface IGlobalSettings
 	{
-		int MigrationNumber { get; set; }
-
 		MessageType MessageType { get; set; }
 
 		string GoogleMapsKey { get; set; }

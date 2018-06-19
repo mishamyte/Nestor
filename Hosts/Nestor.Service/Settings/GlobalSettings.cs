@@ -7,14 +7,12 @@ namespace Nestor.Service.Settings
 	{
 		public string GoogleMapsKey { get; set; }
 
-		public MessageType MessageType { get; set; }
-
-		public int MigrationNumber { get; set; }
-
 		public string IconsUrlFormat { get; set; }
+
+		public List<int> IgnoredNests { get; set; }
 
 		public List<int> IgnoredPokemons { get; set; }
 
-		public List<int> IgnoredNests { get; set; }
+		public MessageType MessageType { get; set; }
 	}
 }

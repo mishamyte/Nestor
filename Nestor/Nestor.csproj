@@ -63,7 +63,6 @@
     <Compile Include="NestsWatcher.cs" />
     <Compile Include="Notifier.cs" />
     <Compile Include="Parser\Parser.cs" />
-    <Compile Include="Parser\PayloadBuilder.cs" />
     <Compile Include="Parser\TheSilphRoadProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TelegramBot.cs" />

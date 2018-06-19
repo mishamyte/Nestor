@@ -96,7 +96,7 @@ namespace Nestor
 						sb.AppendLine(nestTypeName);
 					}
 
-					sb.AppendLine($"#{dbNest.Pokemon.Name} #Migration{_globalSettings.MigrationNumber}");
+					sb.AppendLine($"#{dbNest.Pokemon.Name} #Migration{dbNest.LastMigration}");
 
 					return sb.ToString();
 				}

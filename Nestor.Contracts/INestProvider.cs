@@ -5,6 +5,8 @@ namespace Nestor.Contracts
 {
 	public interface INestProvider : IDisposable
 	{
-		Task<string> GetNestsJsonData();
+		Task<string> GetNestHistoryJsonData();
+
+		Task<string> GetLocalNestsJsonData();
 	}
 }

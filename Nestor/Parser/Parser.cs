@@ -17,9 +17,34 @@ namespace Nestor
 			_provider = provider;
 		}
 
+		public void Dispose()
+		{
+			_provider.Dispose();
+		}
+
+		public async Task<int> GetMigrationNumber()
+		{
+			var responseString = await _provider.GetNestHistoryJsonData();
+
+			var success = JsonDeserializer.TryDeserializeObject(responseString, out JObject responseObject);
+
+			if (success && responseObject?["nestHistoryItems"] != null)
+			{
+				success = JsonDeserializer.TryDeserializeObject(responseObject["nestHistoryItems"].ToString(),
+					out Dictionary<string, NestHistoryItemDto> result);
+
+				if (success)
+				{
+					return result.FirstOrDefault(item => item.Value.Id != 0).Value.Id;
+				}
+			}
+
+			return default(int);
+		}
+
 		public async Task<List<SilphNestDto>> GetNests()
 		{
-			var responseString = await _provider.GetNestsJsonData();
+			var responseString = await _provider.GetLocalNestsJsonData();
 
 			var success = JsonDeserializer.TryDeserializeObject(responseString, out JObject responseObject);
 
@@ -34,11 +59,6 @@ namespace Nestor
 				}
 			}
 			return default(List<SilphNestDto>);
-		}
-
-		public void Dispose()
-		{
-			_provider.Dispose();
 		}
 	}
 }

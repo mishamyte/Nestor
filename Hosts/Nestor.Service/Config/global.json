@@ -1,5 +1,4 @@
 ﻿{
-	"MigrationNumber": 0,
 	"MessageType": "Image",
 	"GoogleMapsKey": "google maps key",
 	"IconsUrlFormat": "http://yourhost.domain/{0}.png",

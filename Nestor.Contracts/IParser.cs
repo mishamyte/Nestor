@@ -8,5 +8,7 @@ namespace Nestor.Contracts
 	public interface IParser : IDisposable
 	{
 		Task<List<SilphNestDto>> GetNests();
+
+		Task<int> GetMigrationNumber();
 	}
 }

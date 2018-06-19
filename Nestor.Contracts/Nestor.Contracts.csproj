@@ -40,6 +40,7 @@
     <Compile Include="Dtos\Enums\NestSpawnType.cs" />
     <Compile Include="Dtos\Enums\NestType.cs" />
     <Compile Include="Dtos\NestDto.cs" />
+    <Compile Include="Dtos\NestHistoryItemDto.cs" />
     <Compile Include="Dtos\SilphNestDto.cs" />
     <Compile Include="IBotProvider.cs" />
     <Compile Include="INestProvider.cs" />
