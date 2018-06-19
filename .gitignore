@@ -243,11 +243,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
-Nestor.Service/Config/bot.Debug.json
-Nestor.Service/Config/bot.Release.json
-Nestor.Service/Config/db.Debug.json
-Nestor.Service/Config/db.Release.json
-Nestor.Service/Config/global.Debug.json
-Nestor.Service/Config/global.Release.json
-Nestor.Service/Config/parser.Debug.json
-Nestor.Service/Config/parser.Release.json
+
+*.Debug.json
+*.Release.json

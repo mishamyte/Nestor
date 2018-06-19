@@ -1,9 +1,9 @@
 ﻿using System;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Nestor.Domain.Contracts;
 using Nestor.Utils;
-using Nestor.Model;
+using NUnit.Framework;
 
 namespace Nestor.Tests
 {
@@ -18,13 +18,9 @@ namespace Nestor.Tests
 				Id = 1,
 				Lat = 50.5,
 				Lng = 30.4,
-				Pokemon = new Pokemon
-				{
-					Id = 25
-				},
 				PokemonId = 25
 			};
-			var iconsUrlFormat = "http://directive901.com/pokeicons/{0}.png";
+			var iconsUrlFormat = "http://alakazam/pokeicons/{0}.png";
 			var gmapsKey = "UUDDLRLRBA";
 
 			var gmapsUrl = GoogleMapsUrlBuilder.GetUrlString(nest, gmapsKey, iconsUrlFormat);
@@ -39,7 +35,7 @@ namespace Nestor.Tests
 			Assert.AreEqual("15", urlParams["zoom"]);
 			Assert.AreEqual("600x400", urlParams["size"]);
 			Assert.AreEqual("roadmap", urlParams["maptype"]);
-			Assert.AreEqual("icon:http://directive901.com/pokeicons/25.png%7C50.5,30.4", urlParams["markers"]);
+			Assert.AreEqual("icon:http://alakazam/pokeicons/25.png%7C50.5,30.4", urlParams["markers"]);
 			Assert.AreEqual(gmapsKey, urlParams["key"]);
 		}
 
@@ -51,13 +47,9 @@ namespace Nestor.Tests
 				Id = 1,
 				Lat = 50.5,
 				Lng = 30.4,
-				Pokemon = new Pokemon
-				{
-					Id = 1
-				},
 				PokemonId = 1
 			};
-			var iconsUrlFormat = "http://directive901.com/pokeicons/{0:D3}.png";
+			var iconsUrlFormat = "http://alakazam/pokeicons/{0:D3}.png";
 			var gmapsKey = "UUDDLRLRBA";
 
 			var gmapsUrl = GoogleMapsUrlBuilder.GetUrlString(nest, gmapsKey, iconsUrlFormat);
@@ -72,7 +64,7 @@ namespace Nestor.Tests
 			Assert.AreEqual("15", urlParams["zoom"]);
 			Assert.AreEqual("600x400", urlParams["size"]);
 			Assert.AreEqual("roadmap", urlParams["maptype"]);
-			Assert.AreEqual("icon:http://directive901.com/pokeicons/001.png%7C50.5,30.4", urlParams["markers"]);
+			Assert.AreEqual("icon:http://alakazam/pokeicons/001.png%7C50.5,30.4", urlParams["markers"]);
 			Assert.AreEqual(gmapsKey, urlParams["key"]);
 		}
 

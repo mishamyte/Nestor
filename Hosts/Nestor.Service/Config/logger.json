@@ -1,0 +1,28 @@
+﻿{
+	"Serilog": {
+		"Using": [ "Serilog.Sinks.Console", "Serilog.Sinks.File" ],
+		"MinimumLevel": {
+			"Default": "Debug",
+			"Override": {
+				"Microsoft": "Warning",
+				"System": "Warning"
+			}
+		},
+		"WriteTo": [
+			{
+				"Name": "Console",
+				"Args": {
+					"outputTemplate": "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}"
+				}
+			},
+			{
+				"Name": "File",
+				"Args": {
+					"path": "Logs\\log_.txt",
+					"rollingInterval": "Day",
+					"outputTemplate": "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}"
+				}
+			}
+		]
+	}
+}

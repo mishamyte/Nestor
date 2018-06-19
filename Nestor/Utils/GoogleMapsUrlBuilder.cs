@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 using System.Text;
-using Nestor.Model;
+using Nestor.Domain.Contracts;
 
 namespace Nestor.Utils
 {
