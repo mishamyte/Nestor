@@ -144,19 +144,15 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Config\bot.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Config\db.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Config\global.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <Content Include="Config\parser.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <None Include="Config\bot.Debug.json">
@@ -184,7 +180,6 @@
       <IsTransformFile>True</IsTransformFile>
     </None>
     <Content Include="Config\logger.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <TransformOnBuild>true</TransformOnBuild>
     </Content>
     <None Include="Config\logger.Debug.json">
