@@ -18,7 +18,7 @@
 			{
 				"Name": "File",
 				"Args": {
-					"path": "Logs\\log-.txt",
+					"path": "Logs\\log_.txt",
 					"rollingInterval": "Day",
 					"outputTemplate": "{Timestamp:dd-MM-yyyy HH:mm:ss} [{Level:u3}] {Message}{NewLine}{Exception}"
 				}
