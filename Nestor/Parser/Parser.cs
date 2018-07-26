@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Nestor.Contracts;
@@ -39,7 +40,7 @@ namespace Nestor
 				}
 			}
 
-			return default(int);
+			throw new ArgumentException($"Can't get migration number from response: {responseString}");
 		}
 
 		public async Task<List<SilphNestDto>> GetNests()
