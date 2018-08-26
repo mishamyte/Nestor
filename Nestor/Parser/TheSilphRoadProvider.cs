@@ -4,17 +4,23 @@ using System.Text;
 using System.Threading.Tasks;
 using Nestor.Contracts;
 using Nestor.Contracts.Settings;
+using Serilog;
 
 namespace Nestor
 {
 	internal class TheSilphRoadProvider : INestProvider
 	{
 		// It's recommended to instantiate one HttpClient per app
-		private static readonly HttpClient Client = new HttpClient();
+		private readonly HttpClient _client;
+		private readonly ILogger _logger;
+		private readonly Policies _policies;
 		private readonly IParserSettings _settings;
 
-		public TheSilphRoadProvider(IParserSettings settings)
+		public TheSilphRoadProvider(HttpClient client, Policies policies, IParserSettings settings, ILogger logger)
 		{
+			_client = client;
+			_logger = logger;
+			_policies = policies;
 			_settings = settings;
 		}
 
@@ -24,7 +30,10 @@ namespace Nestor
 
 			var content = new StringContent(payload, Encoding.UTF8, "application/x-www-form-urlencoded");
 
-			var response = await Client.PostAsync("https://thesilphroad.com/nests/getNestHistory.json", content);
+			var response = await _policies.ExternalHttpProviderPolicy.ExecuteAsync(() =>
+				_client.PostAsync("https://thesilphroad.com/nests/getNestHistory.json", content));
+
+			_logger.Debug("[GetNestHistoryJsonData] finished with {@Result}", response.Content);
 
 			return await response.Content.ReadAsStringAsync();
 		}
@@ -35,14 +44,17 @@ namespace Nestor
 
 			var content = new StringContent(payload, Encoding.UTF8, "application/x-www-form-urlencoded");
 
-			var response = await Client.PostAsync("https://thesilphroad.com/atlas/getLocalNests.json", content);
+			var response = await _policies.ExternalHttpProviderPolicy.ExecuteAsync(() =>
+				_client.PostAsync("https://thesilphroad.com/atlas/getLocalNests.json", content));
+
+			_logger.Debug("[GetLocalNestsJsonData] finished with {@Result}", response.Content);
 
 			return await response.Content.ReadAsStringAsync();
 		}
 
 		public void Dispose()
 		{
-			Client.Dispose();
+			_client.Dispose();
 		}
 
 		private string GetLocalNestsRequest()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Http;
 using System.Timers;
 using Castle.MicroKernel.Registration;
 using Castle.Windsor;
@@ -69,6 +70,8 @@ namespace Nestor
 			_container.Register(Component.For<IGlobalSettings>().Instance(settings.GlobalSettings));
 			_container.Register(Component.For<IParserSettings>().Instance(settings.ParserSettings));
 			_container.Register(Component.For<ILogger>().Instance(logger));
+			_container.Register(Component.For<HttpClient>().LifestyleSingleton());
+			_container.Register(Component.For<Policies>().LifestyleSingleton());
 			_container.Register(Component.For<INestProvider>().ImplementedBy<TheSilphRoadProvider>());
 			_container.Register(Component.For<IParser>().ImplementedBy<Parser>());
 			_container.Register(Component.For<IBotProvider>().ImplementedBy<TelegramBot>());
