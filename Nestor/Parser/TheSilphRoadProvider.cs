@@ -4,7 +4,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Nestor.Contracts;
 using Nestor.Contracts.Settings;
-using Serilog;
 
 namespace Nestor
 {
@@ -12,14 +11,12 @@ namespace Nestor
 	{
 		// It's recommended to instantiate one HttpClient per app
 		private readonly HttpClient _client;
-		private readonly ILogger _logger;
 		private readonly Policies _policies;
 		private readonly IParserSettings _settings;
 
-		public TheSilphRoadProvider(HttpClient client, Policies policies, IParserSettings settings, ILogger logger)
+		public TheSilphRoadProvider(HttpClient client, Policies policies, IParserSettings settings)
 		{
 			_client = client;
-			_logger = logger;
 			_policies = policies;
 			_settings = settings;
 		}
@@ -33,8 +30,6 @@ namespace Nestor
 			var response = await _policies.ExternalHttpProviderPolicy.ExecuteAsync(() =>
 				_client.PostAsync("https://thesilphroad.com/nests/getNestHistory.json", content));
 
-			_logger.Debug("[GetNestHistoryJsonData] finished with {@Result}", response.Content);
-
 			return await response.Content.ReadAsStringAsync();
 		}
 
@@ -46,8 +41,6 @@ namespace Nestor
 
 			var response = await _policies.ExternalHttpProviderPolicy.ExecuteAsync(() =>
 				_client.PostAsync("https://thesilphroad.com/atlas/getLocalNests.json", content));
-
-			_logger.Debug("[GetLocalNestsJsonData] finished with {@Result}", response.Content);
 
 			return await response.Content.ReadAsStringAsync();
 		}

@@ -6,7 +6,7 @@ using Serilog;
 
 namespace Nestor
 {
-	public class Policies
+	internal class Policies
 	{
 		private readonly ILogger _logger;
 
