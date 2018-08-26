@@ -46,7 +46,7 @@ namespace Nestor
 						_logger.Warning("Trying to leave circuit breaker.");
 					});
 
-			ExternalHttpProviderPolicy = Policy.Wrap(retryPolicy, circuitBreakerPolicy);
+			ExternalHttpProviderPolicy = Policy.WrapAsync(retryPolicy, circuitBreakerPolicy);
 		}
 	}
 }
