@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 using Nestor.Contracts;
 using Nestor.Contracts.Settings;
 using Serilog;
@@ -14,11 +15,11 @@ namespace Nestor
 		private readonly IBotSettings _settings;
 		private readonly ILogger _logger;
 
-		public TelegramBot(IBotSettings settings, ILogger logger)
+		public TelegramBot(IBotSettings settings, HttpClient client, ILogger logger)
 		{
 			_settings = settings;
 			_logger = logger;
-			_client = new TelegramBotClient(_settings.ApiKey);
+			_client = new TelegramBotClient(_settings.ApiKey, client);
 
 			InitiateBot();
 			_client.StartReceiving();
