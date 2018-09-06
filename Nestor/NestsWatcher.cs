@@ -6,6 +6,7 @@ using AutoMapper;
 using Nestor.Contracts;
 using Nestor.Contracts.Dtos;
 using Nestor.Domain.Contracts;
+using Polly.CircuitBreaker;
 using Serilog;
 using NestType = Nestor.Contracts.Dtos.NestType;
 
@@ -31,18 +32,20 @@ namespace Nestor
 
 		public async Task<IList<NestDto>> GetMissingAndOutdatedNests()
 		{
+			var resultingNests = new List<NestDto>();
+
 			try
 			{
 				using (var dbProvider = _getDbProvider())
 				{
 					var migrationNumber = await _parser.GetMigrationNumber();
-					var silphNests = await _parser.GetNests();				
-					var resultingNests = new List<NestDto>();
+					var silphNests = await _parser.GetNests();
 
 					if (silphNests != null)
 					{
 						var silphNestsIds = silphNests.Select(nest => nest.Id);
-						var dbNests = dbProvider.NestsRepository.Get(nest => silphNestsIds.Any(silph => silph == nest.Id)).ToArray();
+						var dbNests = dbProvider.NestsRepository
+							.Get(nest => silphNestsIds.Any(silph => silph == nest.Id)).ToArray();
 
 						foreach (var dbNest in dbNests)
 						{
@@ -52,13 +55,13 @@ namespace Nestor
 							{
 								var updatedDbNest = Mapper.Map(silphNest, dbNest);
 								updatedDbNest.LastMigration = migrationNumber;
-								
+
 								resultingNests.Add(new NestDto
 								{
 									Nest = updatedDbNest,
 									NestType = NestType.Outdated
 								});
-							}						
+							}
 						}
 
 						var newSilphNests = silphNests.Where(silph => dbNests.All(nest => silph.Id != nest.Id));
@@ -79,16 +82,18 @@ namespace Nestor
 					{
 						_logger.Warning("Empty parser response");
 					}
-
-					return resultingNests;
 				}
-
+			}
+			catch (BrokenCircuitException ex)
+			{
+				_logger.Debug(ex, "Broken Circuit");
 			}
 			catch (Exception ex)
 			{
 				_logger.Error(ex, "Error while getting missed and outdated nests");
-				throw;
 			}
+
+			return resultingNests;
 		}
 
 		public void ProcessNest(NestDto nestDto)

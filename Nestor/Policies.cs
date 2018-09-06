@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Polly;
 using Polly.Wrap;
 using Serilog;
@@ -22,6 +23,7 @@ namespace Nestor
 		private void CreateExternalHttpProviderPolicy()
 		{
 			var retryPolicy = Policy.Handle<HttpRequestException>()
+				.Or<TaskCanceledException>()
 				.OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
 				.WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
 					(result, timeSpan, retryCount, context) =>
@@ -31,6 +33,7 @@ namespace Nestor
 					});
 
 			var circuitBreakerPolicy = Policy.Handle<HttpRequestException>()
+				.Or<TaskCanceledException>()
 				.OrResult<HttpResponseMessage>(r => !r.IsSuccessStatusCode)
 				.CircuitBreakerAsync(6, TimeSpan.FromMinutes(2),
 					onBreak: (result, state, timeSpan, context) =>
