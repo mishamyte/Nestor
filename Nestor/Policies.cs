@@ -18,7 +18,7 @@ namespace Nestor
 			CreateExternalHttpProviderPolicy();
 		}
 
-		public PolicyWrap<HttpResponseMessage> ExternalHttpProviderPolicy { get; private set; }
+		public AsyncPolicyWrap<HttpResponseMessage> ExternalHttpProviderPolicy { get; private set; }
 
 		private void CreateExternalHttpProviderPolicy()
 		{
