@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core", "Nestor.Core\Nestor.Core.csproj", "{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Data", "Nestor.Data\Nestor.Data.csproj", "{1A160351-9931-47AC-B72F-B88778AC8896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor", "Nestor\Nestor.csproj", "{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "Nestor.Tests\Nestor.Tests.csproj", "{359691CF-D865-4973-A684-83B6F637A52F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Dto", "Nestor.Dto\Nestor.Dto.csproj", "{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A160351-9931-47AC-B72F-B88778AC8896}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A160351-9931-47AC-B72F-B88778AC8896}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A160351-9931-47AC-B72F-B88778AC8896}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A160351-9931-47AC-B72F-B88778AC8896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{359691CF-D865-4973-A684-83B6F637A52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{359691CF-D865-4973-A684-83B6F637A52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{359691CF-D865-4973-A684-83B6F637A52F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{359691CF-D865-4973-A684-83B6F637A52F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
