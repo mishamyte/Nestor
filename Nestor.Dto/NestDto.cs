@@ -10,6 +10,9 @@ namespace Nestor.Dto
         [JsonPropertyName("pokemon_id")]
         public int PokemonId { get; set; }
         
+        [JsonPropertyName("t")]
+        public int NestType { get; set; }
+        
         [JsonPropertyName("lt")]
         public double Lat { get; set; }
         

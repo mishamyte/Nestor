@@ -13,6 +13,8 @@ namespace Nestor.Data
 
         public int PokemonId { get; set; }
         
+        public NestType NestType { get; set; }
+        
         public double Lat { get; set; }
 
         public double Lng { get; set; }
