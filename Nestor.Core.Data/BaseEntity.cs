@@ -1,4 +1,4 @@
-namespace Nestor.Data
+namespace Nestor.Core.Data
 {
     public abstract class BaseEntity
     {

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "Nestor.Test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Dto", "Nestor.Dto\Nestor.Dto.csproj", "{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core.Data", "Nestor.Core.Data\Nestor.Core.Data.csproj", "{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14BF39D7-DC73-4B08-A2EE-8973CDDE6D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,5 @@
 using System;
+using Nestor.Core.Data;
 
 namespace Nestor.Data
 {
