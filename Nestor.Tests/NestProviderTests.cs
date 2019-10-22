@@ -2,8 +2,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Moq;
+using Nestor.Core.Dto;
 using Nestor.Core.Services;
-using Nestor.Dto;
 using Nestor.Providers;
 using NUnit.Framework;
 

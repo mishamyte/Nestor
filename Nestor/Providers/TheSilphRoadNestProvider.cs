@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Nestor.Core.Dto;
 using Nestor.Core.Providers;
 using Nestor.Core.Services;
-using Nestor.Dto;
 using Nestor.Utils;
 
 namespace Nestor.Providers

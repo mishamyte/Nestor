@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Nestor.Core.Data;
 using Nestor.Core.Database;
 
-namespace Nestor.Database
+namespace Nestor.Data.Ef
 {
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity
     {

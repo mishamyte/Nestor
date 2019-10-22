@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Nestor.Dto;
+using Nestor.Core.Dto;
 
 namespace Nestor.Core.Providers
 {

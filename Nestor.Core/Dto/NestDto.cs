@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Nestor.Dto
+namespace Nestor.Core.Dto
 {
     public class NestDto
     {

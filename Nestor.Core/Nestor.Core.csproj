@@ -7,8 +7,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Nestor.Core.Data\Nestor.Core.Data.csproj" />
-      <ProjectReference Include="..\Nestor.Dtos\Nestor.Dtos.csproj" />
-      <ProjectReference Include="..\Nestor.Dto\Nestor.Dto.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Text.Json" Version="4.6.0" />
     </ItemGroup>
 
 </Project>

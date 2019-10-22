@@ -11,7 +11,5 @@ namespace Nestor.Core.Configuration
         public IEnumerable<int> IgnoredNests { get; set; }
 
         public IEnumerable<int> IgnoredPokemons { get; set; }
-
-        public MessageType MessageType { get; set; }
     }
 }

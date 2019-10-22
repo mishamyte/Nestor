@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Nestor.Utils
 {
-    public class IntJsonConverter : JsonConverter<int>
+    internal class IntJsonConverter : JsonConverter<int>
     {
         public override int Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
