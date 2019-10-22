@@ -4,19 +4,18 @@ using Microsoft.Extensions.DependencyInjection;
 using Nestor.Core.Data;
 using Nestor.Core.Database;
 
-namespace Nestor.Database
+namespace Nestor.Data.Ef
 {
-    public abstract class BaseEfUnitOfWork : IUnitOfWork
+    public class EfUnitOfWork : IUnitOfWork
     {
+        private readonly DbContext _context;
         private readonly IServiceProvider _serviceProvider;
-
-        protected readonly DbContext Context;
 
         private bool _disposed;
 
-        protected BaseEfUnitOfWork(DbContext context, IServiceProvider serviceProvider)
+        protected EfUnitOfWork(DbContext context, IServiceProvider serviceProvider)
         {
-            Context = context;
+            _context = context;
             _serviceProvider = serviceProvider;
         }
 
@@ -27,7 +26,7 @@ namespace Nestor.Database
 
         public void SaveChanges()
         {
-            Context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Dispose()
@@ -40,7 +39,7 @@ namespace Nestor.Database
         {
             if (_disposed) return;
             _disposed = true;
-            if (disposing) Context?.Dispose();
+            if (disposing) _context?.Dispose();
         }
     }
 }
