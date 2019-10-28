@@ -30,9 +30,14 @@ namespace Nestor.Data.Ef
 
         public TEntity Create(TEntity entity)
         {
-            if (entity == null) throw new ArgumentNullException(nameof(entity));
             _dbSet.Add(entity);
             return entity;
+        }
+
+        public IEnumerable<TEntity> CreateMany(IEnumerable<TEntity> entities)
+        {
+            _dbSet.AddRange(entities);
+            return entities;
         }
 
         public void Delete(int id)
@@ -50,9 +55,14 @@ namespace Nestor.Data.Ef
 
         public TEntity Update(TEntity entity)
         {
-            _dbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _dbSet.Update(entity);
             return entity;
+        }
+
+        public IEnumerable<TEntity> UpdateMany(IEnumerable<TEntity> entities)
+        {
+            _dbSet.UpdateRange(entities);
+            return entities;
         }
 
         public IEnumerator<TEntity> GetEnumerator()
