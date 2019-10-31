@@ -13,7 +13,7 @@ namespace Nestor.Data.Ef
 
         private bool _disposed;
 
-        protected EfUnitOfWork(DbContext context, IServiceProvider serviceProvider)
+        public EfUnitOfWork(DbContext context, IServiceProvider serviceProvider)
         {
             _context = context;
             _serviceProvider = serviceProvider;

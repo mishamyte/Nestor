@@ -21,8 +21,6 @@ namespace Nestor
         private readonly IRepository<Nest> _nestRepository;
         private readonly IUnitOfWork _unitOfWork;
         
-        private bool _disposed;
-
         public Nestor(ILogger<Nestor> logger, INestProvider nestProvider, INotifierService notifierService,
             IUnitOfWork unitOfWork)
         {
@@ -35,10 +33,17 @@ namespace Nestor
 
         public async Task ProcessNests()
         {
-            var (unknown, updated) = await GetUnknownAndUpdatedNests();
-            ProcessNests(unknown, updated);
-            var nestInfos = unknown.Concat(updated).Select(n => n.MapToNestInfoDto());
-            await nestInfos.ForEachAsync(_notifierService.Notify);
+            try
+            {
+                var (unknown, updated) = await GetUnknownAndUpdatedNests();
+                ProcessNests(unknown, updated);
+                var nestInfos = unknown.Concat(updated).Select(n => n.MapToNestInfoDto());
+                await nestInfos.ForEachAsync(_notifierService.Notify);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Nestor runtime error");
+            }
         }
 
         private async Task<(IReadOnlyList<Nest> unknown, IReadOnlyList<Nest> updated)> GetUnknownAndUpdatedNests()
@@ -95,19 +100,8 @@ namespace Nestor
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed) return;
-            _disposed = true;
-            if (disposing)
-            {
-                _nestRepository?.Dispose();
-                _unitOfWork?.Dispose();
-            }
+            _nestRepository?.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

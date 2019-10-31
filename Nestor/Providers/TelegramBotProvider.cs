@@ -15,7 +15,7 @@ namespace Nestor.Providers
 
         private bool _disposed;
 
-        public TelegramBotProvider(ITelegramBotClient client, ILogger logger, Settings settings)
+        public TelegramBotProvider(ITelegramBotClient client, ILogger<TelegramBotProvider> logger, Settings settings)
         {
             _chatId = settings.Bot.ChatId;
             _client = client ?? throw new ArgumentNullException(nameof(client));

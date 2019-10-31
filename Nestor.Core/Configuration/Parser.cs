@@ -14,7 +14,7 @@ namespace Nestor.Core.Configuration
 
         public double Lng2 { get; set; }
 
-        public int ParsingDelay { get; set; }
+        public int PollingFrequency { get; set; }
 
         public int Zoom { get; set; }
     }

@@ -29,8 +29,9 @@ namespace Nestor.Services
         public async Task Notify(NestInfoDto nest)
         {
             var description = GetDescriptionString(nest);
-            await _botProvider.SendImage(GoogleMapsUrlBuilder.GetUrlString(nest, _gmapsKey, _iconsUrlFormat),
-                description);
+            var gMapsUrl = GoogleMapsUrlBuilder.GetUrlString(nest, _gmapsKey, _iconsUrlFormat);
+            _logger.LogDebug(gMapsUrl);
+            await _botProvider.SendImage(gMapsUrl, description);
             _logger.LogInformation("New nest info {@Nest}", nest);
         }
 

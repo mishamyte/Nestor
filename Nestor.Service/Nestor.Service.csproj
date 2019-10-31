@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+        <UserSecretsId>dotnet-Nestor.Service-D560FE63-FDCA-416D-9BD8-74C19E979C5D</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.0.1" />
+        <PackageReference Include="Serilog.AspNetCore" Version="3.1.0" />
+        <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
+        <PackageReference Include="Serilog.Settings.Configuration" Version="3.1.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+        <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
+        <PackageReference Include="Serilog.Sinks.TelegramClient" Version="2.0.1" />
+        <PackageReference Include="Telegram.Bot" Version="15.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Nestor.Core\Nestor.Core.csproj" />
+      <ProjectReference Include="..\Nestor.Data.Ef\Nestor.Data.Ef.csproj" />
+      <ProjectReference Include="..\Nestor\Nestor.csproj" />
+    </ItemGroup>
+</Project>
