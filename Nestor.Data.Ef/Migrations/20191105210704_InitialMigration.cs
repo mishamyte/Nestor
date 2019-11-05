@@ -8,12 +8,8 @@ namespace Nestor.Data.Ef.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "nestor");
-
             migrationBuilder.CreateTable(
                 name: "Pokemon",
-                schema: "nestor",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
@@ -26,7 +22,6 @@ namespace Nestor.Data.Ef.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Nest",
-                schema: "nestor",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false),
@@ -45,7 +40,6 @@ namespace Nestor.Data.Ef.Migrations
                     table.ForeignKey(
                         name: "FK_Nest_Pokemon_PokemonId",
                         column: x => x.PokemonId,
-                        principalSchema: "nestor",
                         principalTable: "Pokemon",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -53,7 +47,6 @@ namespace Nestor.Data.Ef.Migrations
 
             migrationBuilder.CreateTable(
                 name: "NestUpdate",
-                schema: "nestor",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -69,14 +62,12 @@ namespace Nestor.Data.Ef.Migrations
                     table.ForeignKey(
                         name: "FK_NestUpdate_Nest_PokemonId",
                         column: x => x.PokemonId,
-                        principalSchema: "nestor",
                         principalTable: "Nest",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_NestUpdate_Pokemon_PokemonId",
                         column: x => x.PokemonId,
-                        principalSchema: "nestor",
                         principalTable: "Pokemon",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -84,13 +75,11 @@ namespace Nestor.Data.Ef.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Nest_PokemonId",
-                schema: "nestor",
                 table: "Nest",
                 column: "PokemonId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_NestUpdate_PokemonId",
-                schema: "nestor",
                 table: "NestUpdate",
                 column: "PokemonId");
         }
@@ -98,16 +87,13 @@ namespace Nestor.Data.Ef.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "NestUpdate",
-                schema: "nestor");
+                name: "NestUpdate");
 
             migrationBuilder.DropTable(
-                name: "Nest",
-                schema: "nestor");
+                name: "Nest");
 
             migrationBuilder.DropTable(
-                name: "Pokemon",
-                schema: "nestor");
+                name: "Pokemon");
         }
     }
 }

@@ -10,14 +10,13 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Nestor.Data.Ef.Migrations
 {
     [DbContext(typeof(NestorContext))]
-    [Migration("20191105203522_InitialMigration")]
+    [Migration("20191105210704_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("nestor")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
