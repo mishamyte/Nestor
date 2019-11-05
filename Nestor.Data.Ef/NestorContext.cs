@@ -19,7 +19,6 @@ namespace Nestor.Data.Ef
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.HasDefaultSchema("nestor");
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }

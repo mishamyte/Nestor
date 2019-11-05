@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +27,8 @@ namespace Nestor.Service
             services.AddSingleton(settings);
 
             services.AddDbContext<DbContext, NestorContext>(options =>
-                options.UseNpgsql(context.Configuration.GetConnectionString(DbConnectionStringName)));
+                options.UseNpgsql(context.Configuration.GetConnectionString(DbConnectionStringName),
+                    opt => opt.SetPostgresVersion(new Version(9, 6))));
 
             services.AddHttpClient<ITheSilphRoadService, TheSilphRoadService>(); // Add Polly policies
 

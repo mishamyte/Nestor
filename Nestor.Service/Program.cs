@@ -8,10 +8,10 @@ namespace Nestor.Service
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            CreateGenericHostBuilder(args).Build().Migrate().Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateGenericHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices(ServiceCollectionHelper.RegisterServices)
                 .ConfigureLogging((ctx, cfg) => cfg.ClearProviders())
