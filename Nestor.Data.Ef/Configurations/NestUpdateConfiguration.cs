@@ -14,7 +14,7 @@ namespace Nestor.Data.Ef.Configurations
 
             builder.HasOne(d => d.Nest)
                 .WithMany(p => p.NestUpdates)
-                .HasForeignKey(d => d.PokemonId);
+                .HasForeignKey(d => d.NestId);
         }
     }
 }
