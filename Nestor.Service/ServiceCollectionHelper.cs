@@ -30,11 +30,14 @@ namespace Nestor.Service
                 options.UseNpgsql(context.Configuration.GetConnectionString(DbConnectionStringName),
                     opt => opt.SetPostgresVersion(new Version(9, 6))));
 
-            services.AddHttpClient<ITheSilphRoadService, TheSilphRoadService>(); // Add Polly policies
+            services.AddHttpClient<ITheSilphRoadService, TheSilphRoadService>()
+                .AddPolicyHandler((provider, message) => provider.GetRequiredService<Policies>().RetryPolicy)
+                .AddPolicyHandler((provider, message) => provider.GetRequiredService<Policies>().CircuitBreakerPolicy);
 
             services.AddSingleton<IBotProvider, TelegramBotProvider>();
             services.AddSingleton<ITelegramBotClient, TelegramBotClient>(sp =>
                 new TelegramBotClient(settings.Bot.ApiKey, sp.GetRequiredService<IHttpClientFactory>().CreateClient()));
+            services.AddSingleton<Policies>();
 
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
             services.AddScoped<INestProvider, TheSilphRoadNestProvider>();
