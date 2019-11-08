@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,6 +12,8 @@ using Nestor.Core.Services;
 using Nestor.Data;
 using Nestor.Utils;
 
+[assembly: InternalsVisibleTo("Nestor.Tests")]
+
 namespace Nestor
 {
     public class Nestor : IDisposable
@@ -20,7 +23,7 @@ namespace Nestor
         private readonly INotifierService _notifierService;
         private readonly IRepository<Nest> _nestRepository;
         private readonly IUnitOfWork _unitOfWork;
-        
+
         public Nestor(ILogger<Nestor> logger, INestProvider nestProvider, INotifierService notifierService,
             IUnitOfWork unitOfWork)
         {

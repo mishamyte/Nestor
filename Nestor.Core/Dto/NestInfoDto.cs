@@ -4,6 +4,8 @@ namespace Nestor.Core.Dto
 {
     public class NestInfoDto
     {
+        public int Id { get; set; }
+        
         public bool IsRecommended { get; set; }
 
         public string HashtagName { get; set; }

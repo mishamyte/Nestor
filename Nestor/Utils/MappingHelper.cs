@@ -31,6 +31,7 @@ namespace Nestor.Utils
         {
             return new NestInfoDto
             {
+                Id = source.Id,
                 IsRecommended = source.IsRecommended,
                 HashtagName = source.HashtagName,
                 LastMigration = source.LastMigration,
