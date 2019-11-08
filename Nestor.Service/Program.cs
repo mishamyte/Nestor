@@ -13,6 +13,7 @@ namespace Nestor.Service
 
         private static IHostBuilder CreateGenericHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
                 .ConfigureServices(ServiceCollectionHelper.RegisterServices)
                 .ConfigureLogging((ctx, cfg) => cfg.ClearProviders())
                 .UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration));
