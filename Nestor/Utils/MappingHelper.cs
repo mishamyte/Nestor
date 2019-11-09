@@ -27,23 +27,15 @@ namespace Nestor.Utils
             return destination;
         }
 
-        public static NestInfoDto MapToNestInfoDto(this Nest source)
+        public static string GetNestTypeDescription(this NestType nestType)
         {
-            return new NestInfoDto
+            return nestType switch
             {
-                Id = source.Id,
-                IsRecommended = source.IsRecommended,
-                HashtagName = source.HashtagName,
-                LastMigration = source.LastMigration,
-                Lat = source.Lat,
-                Lng = source.Lng,
-                Name = source.Name,
-                NestType = source.NestType.GetNestTypeDescription(),
-                Pokemon = new PokemonDto
-                {
-                    Id = source.Pokemon.Id,
-                    Name = source.Pokemon.Name
-                }
+                NestType.Cluster => "CLUSTER SPAWN",
+                NestType.FrequentSpawnArea => "FREQUENT SPAWN AREA",
+                NestType.FrequentSpawnPoint => "FREQUENT SPAWN POINT",
+                NestType.Unknown => "UNKNOWN NEST TYPE",
+                _ => string.Empty
             };
         }
 
@@ -55,18 +47,6 @@ namespace Nestor.Utils
                 PokemonId = nest.PokemonId,
                 MigrationNumber = nest.LastMigration,
                 Timestamp = DateTime.UtcNow
-            };
-        }
-
-        private static string GetNestTypeDescription(this NestType nestType)
-        {
-            return nestType switch
-            {
-                NestType.Cluster => "CLUSTER SPAWN",
-                NestType.FrequentSpawnArea => "FREQUENT SPAWN AREA",
-                NestType.FrequentSpawnPoint => "FREQUENT SPAWN POINT",
-                NestType.Unknown => "UNKNOWN NEST TYPE",
-                _ => string.Empty
             };
         }
     }

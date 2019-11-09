@@ -4,6 +4,12 @@ namespace Nestor.Core.Configuration
 {
     public class Global
     {
+        public Global()
+        {
+            IgnoredNests = new List<int>();
+            IgnoredPokemons = new List<int>();
+        }
+        
         public string GoogleMapsKey { get; set; }
 
         public string IconsUrlFormat { get; set; }

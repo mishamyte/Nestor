@@ -40,6 +40,7 @@ namespace Nestor.Service
             services.AddSingleton<Policies>();
 
             services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+            services.AddScoped<INestEntityService, NestEntityService>();
             services.AddScoped<INestProvider, TheSilphRoadNestProvider>();
             services.AddScoped<INotifierService, NotifierService>();
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));

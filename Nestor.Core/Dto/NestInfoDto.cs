@@ -5,7 +5,7 @@ namespace Nestor.Core.Dto
     public class NestInfoDto
     {
         public int Id { get; set; }
-        
+
         public bool IsRecommended { get; set; }
 
         public string HashtagName { get; set; }
@@ -26,11 +26,12 @@ namespace Nestor.Core.Dto
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(!string.IsNullOrEmpty(HashtagName) ? $"{Name} #{HashtagName}" : $"{Name}");
-            
+            if (!string.IsNullOrEmpty(Name))
+                sb.AppendLine(!string.IsNullOrEmpty(HashtagName) ? $"{Name} #{HashtagName}" : $"{Name}");
+
             if (IsRecommended) sb.AppendLine("🔥 RECOMMENDED NEST 🔥");
             if (!string.IsNullOrEmpty(NestType)) sb.AppendLine(NestType);
-            
+
             sb.Append($"#{Pokemon.Name} #Migration{LastMigration}");
 
             return sb.ToString();

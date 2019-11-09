@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Nestor.Core.Database;
 using Nestor.Core.Dto;
 using Nestor.Core.Providers;
 using Nestor.Core.Services;
@@ -19,19 +17,17 @@ namespace Nestor
     public class Nestor : IDisposable
     {
         private readonly ILogger<Nestor> _logger;
+        private readonly INestEntityService _nestEntityService;
         private readonly INestProvider _nestProvider;
         private readonly INotifierService _notifierService;
-        private readonly IRepository<Nest> _nestRepository;
-        private readonly IUnitOfWork _unitOfWork;
 
-        public Nestor(ILogger<Nestor> logger, INestProvider nestProvider, INotifierService notifierService,
-            IUnitOfWork unitOfWork)
+        public Nestor(ILogger<Nestor> logger, INestProvider nestProvider, INestEntityService nestEntityService,
+            INotifierService notifierService)
         {
             _logger = logger;
             _nestProvider = nestProvider;
+            _nestEntityService = nestEntityService;
             _notifierService = notifierService;
-            _nestRepository = unitOfWork.GetRepository<Nest>();
-            _unitOfWork = unitOfWork;
         }
 
         public async Task ProcessNests()
@@ -40,13 +36,22 @@ namespace Nestor
             {
                 var (unknown, updated) = await GetUnknownAndUpdatedNests();
                 ProcessNests(unknown, updated);
-                var nestInfos = unknown.Concat(updated).Select(n => n.MapToNestInfoDto());
-                await nestInfos.ForEachAsync(_notifierService.Notify);
+                await NotifyAboutNests(unknown.Concat(updated));
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Nestor runtime error");
             }
+        }
+
+        public void Dispose()
+        {
+            _nestEntityService?.Dispose();
+        }
+
+        private static bool IsOutdated(Nest dbNest, NestDto silphNest, int migrationNumber)
+        {
+            return dbNest.PokemonId != silphNest.PokemonId || dbNest.LastMigration != migrationNumber;
         }
 
         private async Task<(IReadOnlyList<Nest> unknown, IReadOnlyList<Nest> updated)> GetUnknownAndUpdatedNests()
@@ -62,7 +67,7 @@ namespace Nestor
                 var migrationNumber = await _nestProvider.GetMigrationNumber();
 
                 var silphNestsIds = silphNests.Select(n => n.Id);
-                var dbNests = GetNestsFromDb(silphNestsIds);
+                var dbNests = _nestEntityService.GetNests(silphNestsIds).ToList();
 
                 var nestDataPairs = dbNests.Select(dbn =>
                     (dbNest: dbn, silphNest: silphNests.FirstOrDefault(sn => sn.Id == dbn.Id)));
@@ -80,31 +85,29 @@ namespace Nestor
             return result;
         }
 
+        private async Task NotifyAboutNests(IEnumerable<Nest> nests)
+        {
+            var nestsIds = nests.Select(n => n.Id);
+            var nestInfos = _nestEntityService.GetNestInfoDtos(nestsIds);
+            await nestInfos.ForEachAsync(_notifierService.Notify);
+        }
+
         private void ProcessNests(IReadOnlyCollection<Nest> unknown, IReadOnlyCollection<Nest> updated)
         {
-            if (unknown.Any()) _nestRepository.CreateMany(unknown);
-            if (updated.Any()) _nestRepository.UpdateMany(updated);
-            _unitOfWork.SaveChanges();
-        }
+            if (!unknown.Any() && !updated.Any())
+            {
+                return;
+            }
 
-        private static bool IsOutdated(Nest dbNest, NestDto silphNest, int migrationNumber)
-        {
-            return dbNest.PokemonId != silphNest.PokemonId || dbNest.LastMigration != migrationNumber;
-        }
+            if (unknown.Any())
+            {
+                _nestEntityService.CreateMany(unknown);
+            }
 
-        private IReadOnlyList<Nest> GetNestsFromDb(IEnumerable<int> nestsIds)
-        {
-            return _nestRepository
-                .Include(e => e.Pokemon)
-                .Where(e => nestsIds.Contains(e.Id))
-                .AsNoTracking()
-                .ToList();
-        }
-
-        public void Dispose()
-        {
-            _nestRepository?.Dispose();
-            _unitOfWork?.Dispose();
+            if (updated.Any())
+            {
+                _nestEntityService.UpdateMany(updated);
+            }
         }
     }
 }
