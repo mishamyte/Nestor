@@ -1,10 +1,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Moq;
 using Nestor.Core.Dto;
 using Nestor.Core.Services;
 using Nestor.Providers;
+using Nestor.Tests.Logger;
 using NUnit.Framework;
 
 namespace Nestor.Tests
@@ -13,6 +15,7 @@ namespace Nestor.Tests
     public class NestProviderTests
     {
         private IConfigurationRoot _configuration;
+        private readonly ILogger<TheSilphRoadNestProvider> _logger = new NUnitLogger<TheSilphRoadNestProvider>();
 
         [OneTimeSetUp]
         public void SetUp()
@@ -28,7 +31,7 @@ namespace Nestor.Tests
             var mock = new Mock<ITheSilphRoadService>();
             mock.Setup(m => m.GetNestHistory()).ReturnsAsync(_configuration["GetNestHistory"]);
 
-            var parser = new TheSilphRoadNestProvider(mock.Object);
+            var parser = new TheSilphRoadNestProvider(_logger, mock.Object);
 
             var result = await parser.GetMigrationNumber();
 
@@ -46,7 +49,7 @@ namespace Nestor.Tests
             var mock = new Mock<ITheSilphRoadService>();
             mock.Setup(m => m.GetLocalNests()).ReturnsAsync(_configuration["GetLocalNests"]);
 
-            var parser = new TheSilphRoadNestProvider(mock.Object);
+            var parser = new TheSilphRoadNestProvider(_logger, mock.Object);
 
             var result = await parser.GetNests();
             var nestDtos = result as NestDto[] ?? result.ToArray();

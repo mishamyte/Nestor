@@ -66,6 +66,8 @@ namespace Nestor
 
                 var migrationNumber = await _nestProvider.GetMigrationNumber();
 
+                if (migrationNumber == default) return result;
+
                 var silphNestsIds = silphNests.Select(n => n.Id);
                 var dbNests = _nestEntityService.GetNests(silphNestsIds).ToList();
 
