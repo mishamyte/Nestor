@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core", "Nestor.Core\Nestor.Core.csproj", "{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core", "src\Nestor.Core\Nestor.Core.csproj", "{0A9AF8D8-91CB-4A97-86DF-FB3DB4726E35}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Data", "Nestor.Data\Nestor.Data.csproj", "{1A160351-9931-47AC-B72F-B88778AC8896}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Data", "src\Nestor.Data\Nestor.Data.csproj", "{1A160351-9931-47AC-B72F-B88778AC8896}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor", "Nestor\Nestor.csproj", "{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor", "src\Nestor\Nestor.csproj", "{A65C45E1-DE63-46F3-820F-2BAE63E81A7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "Nestor.Tests\Nestor.Tests.csproj", "{359691CF-D865-4973-A684-83B6F637A52F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Tests", "src\Nestor.Tests\Nestor.Tests.csproj", "{359691CF-D865-4973-A684-83B6F637A52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core.Data", "Nestor.Core.Data\Nestor.Core.Data.csproj", "{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Core.Data", "src\Nestor.Core.Data\Nestor.Core.Data.csproj", "{D4B08F46-FE26-42A5-8170-3ACD47D3A7E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Data.Ef", "Nestor.Data.Ef\Nestor.Data.Ef.csproj", "{CD5AF68D-5248-4FFB-BAD1-5280385B8B11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Data.Ef", "src\Nestor.Data.Ef\Nestor.Data.Ef.csproj", "{CD5AF68D-5248-4FFB-BAD1-5280385B8B11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Service", "Nestor.Service\Nestor.Service.csproj", "{1D3E864A-A112-4B9A-90B9-2DD10EBD76D2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nestor.Service", "src\Nestor.Service\Nestor.Service.csproj", "{1D3E864A-A112-4B9A-90B9-2DD10EBD76D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

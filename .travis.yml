@@ -5,4 +5,4 @@ solution: Nestor.sln
 install:
   - dotnet restore
 script:
-  -  dotnet test ./Nestor.Tests
+  -  dotnet test ./src/Nestor.Tests
