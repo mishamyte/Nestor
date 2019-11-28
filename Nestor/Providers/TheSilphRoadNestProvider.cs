@@ -49,9 +49,15 @@ namespace Nestor.Providers
             try
             {
                 using var document = JsonDocument.Parse(response);
-                return document.RootElement.GetProperty("localMarkers").EnumerateObject()
-                    .Select(p => JsonSerializer.Deserialize<NestDto>(p.Value.ToString(), GetJsonSerializerOptions()))
-                    .ToList();
+                var localMarkers = document.RootElement.GetProperty("localMarkers");
+
+                if (localMarkers.ValueKind == JsonValueKind.Object)
+                {
+                    return localMarkers.EnumerateObject()
+                        .Select(p =>
+                            JsonSerializer.Deserialize<NestDto>(p.Value.ToString(), GetJsonSerializerOptions()))
+                        .ToList();
+                }
             }
             catch (Exception ex)
             {
